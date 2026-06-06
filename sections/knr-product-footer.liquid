@@ -1,0 +1,392 @@
+<style>
+  /* ---------------------------------------------------------
+     1. STRUCTURE DU PIED DE PAGE ET GRILLE GLOBALE
+     --------------------------------------------------------- */
+  .section-product-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-footer-section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: #FCFBF9; /* Fond crème clair conforme */
+    box-sizing: border-box;
+    padding: 80px 0 40px 0;
+    border-top: 1px solid #E0DDD6;
+  }
+
+  .knr-footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px; /* Espacement vertical entre les sections du footer */
+    box-sizing: border-box;
+  }
+
+  /* Grille supérieure : Les 4 colonnes de liens */
+  .knr-footer-top-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .knr-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .knr-footer-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .knr-footer-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .knr-footer-link:hover {
+    opacity: 0.6;
+  }
+
+  .knr-about-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: -2%;
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Certification Cosmos Bio */
+  .knr-cert-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-top: 16px;
+    border-bottom: 0.8px solid #E0DDD6;
+    padding-bottom: 16px;
+  }
+
+  .knr-cert-logo {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+
+  .knr-cert-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-cert-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 0.8px solid #000000;
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: opacity 0.2s;
+    margin-top: 12px;
+  }
+
+  .knr-cert-link:hover {
+    opacity: 0.6;
+  }
+
+  /* ---------------------------------------------------------
+     2. ZONE INTERMÉDIAIRE : GIGANTESQUE LOGO "MAISON CÉLESTINE"
+     --------------------------------------------------------- */
+  .knr-footer-brand-row {
+    width: 100%;
+    border-top: 1px solid #E0DDD6;
+    padding-top: 48px;
+    box-sizing: border-box;
+  }
+
+  /* S'adapte de manière ultra-fluide de 48px à 130px selon l'écran de l'utilisateur */
+  .knr-footer-brand-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(48px, 9vw, 130px);
+    line-height: 1;
+    letter-spacing: -3px;
+    text-transform: lowercase;
+    color: #000000;
+    margin: 0;
+    text-align: left;
+  }
+
+  /* ---------------------------------------------------------
+     3. BARRE DE COPYRIGHT ET DE RÉSEAUX (SUB-FOOTER)
+     --------------------------------------------------------- */
+  .knr-footer-sub-bar {
+    width: 100%;
+    border-top: 1px solid #E0DDD6;
+    padding-top: 24px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Sélecteurs Pays & Langues */
+  .knr-footer-selectors-group {
+    display: flex;
+    gap: 24px;
+  }
+
+  .knr-footer-selector {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .knr-selector-chevron {
+    width: 8px;
+    height: 8px;
+    color: #000000;
+  }
+
+  /* Copyright */
+  .knr-footer-copyright {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px; /* Conforme Figma */
+    line-height: 20px; /* Conforme Figma */
+    letter-spacing: -2%; /* Conforme Figma */
+    color: #000000;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* Icônes de réseaux sociaux */
+  .knr-footer-socials {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .knr-social-icon-link {
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .knr-social-icon-link:hover {
+    opacity: 0.6;
+  }
+
+  /* ---------------------------------------------------------
+     4. RESPONSIVE DESIGN (MOBILE / TABLETTE)
+     --------------------------------------------------------- */
+  @media (max-width: 991px) {
+    .knr-footer-section {
+      height: auto;
+      padding: 40px 20px;
+    }
+    .knr-footer-container {
+      padding: 0;
+      gap: 32px;
+    }
+    .knr-footer-top-row {
+      grid-template-columns: repeat(2, 1fr); /* 2x2 sur tablette */
+      gap: 40px 24px;
+    }
+    .knr-footer-brand-title {
+      letter-spacing: -1.5px;
+    }
+    .knr-footer-sub-bar {
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+    }
+    .knr-footer-selectors-group {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .knr-footer-top-row {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+      gap: 32px;
+    }
+  }
+</style>
+
+<div class="knr-footer-section">
+  <div class="knr-footer-container">
+    
+    <!-- 1. GRILLE SUPÉRIEURE : LES LIENS -->
+    <div class="knr-footer-top-row">
+      <!-- Colonne 1 : Découvrir -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">Découvrir</h3>
+        <div class="knr-footer-links-list">
+          <a href="/collections/all" class="knr-footer-link">Acheter</a>
+          <a href="/pages/notre-histoire" class="knr-footer-link">Notre histoire</a>
+          <a href="/pages/la-science" class="knr-footer-link">Science</a>
+          <a href="/pages/presse" class="knr-footer-link">Presse</a>
+          <a href="/pages/nos-adresses" class="knr-footer-link">Où nous trouver</a>
+        </div>
+      </div>
+
+      <!-- Colonne 2 : Service client -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">Service client</h3>
+        <div class="knr-footer-links-list">
+          <a href="/account" class="knr-footer-link">Mon compte</a>
+          <a href="/pages/suivre-mon-colis" class="knr-footer-link">Suivre mon colis</a>
+          <a href="/pages/livraison-retour" class="knr-footer-link">Livraison & retour</a>
+          <a href="/pages/faqs" class="knr-footer-link">FAQs</a>
+          <a href="/pages/nous-contacter" class="knr-footer-link">Nous contacter</a>
+        </div>
+      </div>
+
+      <!-- Colonne 3 : Légal & Transparence -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">Légal & Transparence</h3>
+        <div class="knr-footer-links-list">
+          <a href="/pages/conditions-generales-de-vente" class="knr-footer-link">Conditions générales de vente</a>
+          <a href="/pages/mentions-legales" class="knr-footer-link">Mentions légales</a>
+          <a href="/pages/politique-de-cookies" class="knr-footer-link">Paramètre des cookies</a>
+          <a href="/pages/accessibilite" class="knr-footer-link">Accessibilité</a>
+        </div>
+      </div>
+
+      <!-- Colonne 4 : À propos -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">À propos de Maison Célestine</h3>
+        <p class="knr-about-text">
+          Maison Célestine est une marque de soins anti-âge haut de gamme formulée autour d'actifs rares et certifiés biologiques, guidée par une expertise médicale et un rituel simple, précis et efficace.
+        </p>
+
+        <div class="knr-cert-block">
+          <img src="{{ 'Calque_1.png' | asset_url }}" 
+               onerror="this.style.display='none';" 
+               alt="Cosmétique Bio - Cosmos Organic" 
+               class="knr-cert-logo">
+          <p class="knr-cert-text">Certifié COSMOS ORGANIC par ECOCERT Greenlife</p>
+        </div>
+
+        <a href="/pages/certifications" class="knr-cert-link">Voir le certificat</a>
+      </div>
+    </div>
+
+    <!-- 2. ZONE INTERMÉDIAIRE : GIGANTESQUE BRANDING TEXT -->
+    <div class="knr-footer-brand-row">
+      <div class="knr-footer-brand-title">maison célestine</div>
+    </div>
+
+    <!-- 3. BARRE INFÉRIEURE : COPYRIGHT, SELECTEURS & RESEAUX -->
+    <div class="knr-footer-sub-bar">
+      
+      <!-- Sélecteurs Langues et Devises -->
+      <div class="knr-footer-selectors-group">
+        <div class="knr-footer-selector" onclick="alert('Choix de devise à venir')">
+          <span>France (€)</span>
+          <svg class="knr-selector-chevron" viewBox="0 0 24 24" width="8" height="8">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="knr-footer-selector" onclick="alert('Choix de langue à venir')">
+          <span>Français</span>
+          <svg class="knr-selector-chevron" viewBox="0 0 24 24" width="8" height="8">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Copyright conforme Figma -->
+      <p class="knr-footer-copyright">
+        © 2026 Maison Célestine. Tous droits réservés.
+      </p>
+
+      <!-- Icônes des réseaux sociaux minimalistes SVG -->
+      <div class="knr-footer-socials">
+        <!-- Facebook -->
+        <a href="https://facebook.com" class="knr-social-icon-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.51-.81 8-4.82 8-9.95z"/>
+          </svg>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com" class="knr-social-icon-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://tiktok.com" class="knr-social-icon-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74-.22-.2-.4-.43-.59-.65v7.54c-.11 1.79-.83 3.61-2.22 4.75-1.57 1.35-3.84 1.83-5.83 1.25-2.61-.7-4.48-3.23-4.44-5.96.03-2.9 2.3-5.46 5.17-5.71.69-.07 1.39-.02 2.07.13v4.11c-.58-.19-1.22-.24-1.82-.12-1.24.22-2.2 1.34-2.23 2.59-.04 1.59 1.34 2.97 2.93 2.82 1.48-.12 2.58-1.47 2.47-2.94V.02z"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com" class="knr-social-icon-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Product Footer",
+  "tag": "section",
+  "class": "section-product-footer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "KNR Product Footer"
+    }
+  ]
+}
+{% endschema %}

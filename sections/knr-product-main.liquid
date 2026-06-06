@@ -1,0 +1,5089 @@
+<style>
+  /* ---------------------------------------------------------
+     1. SECTIONS GLOBALES ET REGLAGE DE HAUTEUR (CONFORME FIGMA)
+     --------------------------------------------------------- */
+  .section-product-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Section 1 : Hero (Hauteur fixée à 760px comme sur Figma) */
+  .knr-hero-section {
+    width: 100vw;
+    height: 760px; /* Réduit pour s'adapter parfaitement sans déborder */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background: 
+      linear-gradient(rgba(0, 0, 0, 0.24) 0%, rgba(0, 0, 0, 0) 100%),
+      url("{{ 'upscale_image.png' | asset_url }}") no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    border-bottom: 1px solid #FFFFFF;
+  }
+
+  /* Section 2 : Bas (Description & Carrousel) */
+  .knr-bottom-section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: transparent; 
+    box-sizing: border-box;
+  }
+
+  /* Conteneurs de grille de 1440px */
+  .knr-hero-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    position: relative; /* Point d'ancrage absolu pour la fiche produit */
+    box-sizing: border-box;
+  }
+
+  .knr-bottom-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px 0px 40px !important;
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;        /* Force les colonnes de gauche et de droite à faire la même hauteur */
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     2. LIAISON DROITE & TYPOGRAPHIES FLUIDES (ADAPTATIVE)
+     --------------------------------------------------------- */
+  
+  /* Largeur adaptative : Ajuste de 400px à 500px selon la résolution */
+  .knr-details-column {
+    width: clamp(400px, 28vw, 500px); 
+    flex-shrink: 0;
+  }
+
+  /* Bloc supérieur (Haut) - HAUTEUR RÉDUITE EN HAUT */
+   .knr-product-sheet-top {
+    width: clamp(400px, 28vw, 500px); 
+    height: auto;               /* Hauteur naturelle basée sur le contenu pour éviter tout vide étiré */
+    position: absolute;
+    bottom: 0;                  /* Reste parfaitement alignée en bas */
+    right: 40px;                
+    background-color: #FFFFFF;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0px; 
+    border-bottom-right-radius: 0px;
+    padding: 40px;              
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;                  /* Écart fixe et compact entre le haut et le bas */
+    z-index: 10;
+  }
+
+  /* Groupe haut : Textes de détails */
+  .knr-sheet-top-group {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 1.2vw, 18px); 
+  }
+
+  /* Groupe bas : Sélecteurs et bouton */
+  .knr-sheet-bottom-group {
+    margin-top: auto; 
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 1.2vw, 18px); 
+  }
+
+   .knr-product-sheet-bottom {
+    width: clamp(400px, 28vw, 500px); 
+    background-color: #FFFFFF;
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 20px 40px 40px 40px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: 657px !important;       /* Fixé à 657px (617px de hauteur + 40px d'écart du haut) */
+  }
+
+  /* Fil d'Ariane (Breadcrumb) */
+  .knr-product-breadcrumb {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(10px, 0.75vw, 11px); 
+    line-height: 14px;
+    letter-spacing: -2%;
+    color: #B5A282;
+    margin-bottom:20px;
+  }
+
+  /* Badges / Tags */
+  .knr-product-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom:15px;
+  }
+
+  .knr-tag {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    line-height: 100%;
+    letter-spacing: -2%;
+    text-transform: uppercase;
+    color: #000000;
+    border: 0.8px solid #000000;
+    padding: 4px 10px; 
+    display: inline-block;
+  }
+
+  /* MODIF : Aligné en Flex avec les étoiles et avis à droite */
+  .knr-product-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+    margin-bottom:12px;
+  }
+
+  .knr-product-title {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(22px, 1.8vw, 30px); 
+    line-height: 1.25;
+    letter-spacing: -2%;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-product-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    flex-shrink: 0;
+    gap: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 0.75vw, 11px);
+  }
+
+  .knr-stars {
+    color: #B5A282;
+    font-weight: bold;
+  }
+
+  .knr-rating-score {
+    color: #000000;
+    margin-left: 2px;
+  }
+
+  .knr-reviews-count {
+    color: #B5A282;
+  }
+
+  /* Diagnostics Yuka / INCI */
+  .knr-ratings-row {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    color: #000000;
+    border-bottom: 0.8px solid #E0DDD6;
+    padding-bottom: 16px;
+  }
+
+  .knr-bold {
+    font-weight: 700;
+  }
+
+  /* Descriptif d'introduction */
+  .knr-product-intro {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    line-height: 1.6; 
+    letter-spacing: -2%;
+    color: #000000;
+  }
+
+  /* Sélection de Variantes & Prix */
+  .knr-variants-price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 0.8px solid #E0DDD6;
+    padding-top: 20px;
+  }
+
+  .knr-option-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    font-weight: 500;
+    color: #000000;
+  }
+
+  .knr-variant-selector {
+    display: flex;
+    gap: 12px;
+  }
+
+  .knr-variant-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    color: #6E6E6E;
+    padding: 4px 0px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .knr-variant-btn.active {
+    color: #000000;
+    border-bottom: 1px solid #000000;
+    font-weight: 600;
+  }
+
+  .knr-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .knr-price {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(22px, 1.8vw, 28px); 
+    font-weight: 600;
+    color: #000000;
+  }
+
+  .knr-compare-price {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 0.9vw, 16px); 
+    text-decoration: line-through;
+    color: #B5A282;
+  }
+
+  .knr-unit-price {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 0.75vw, 11px); 
+    color: #B5A282;
+  }
+
+  /* Bouton d'ajout au panier */
+  .knr-add-to-cart-btn {
+    width: 100%;
+    height: clamp(44px, 3.5vw, 54px); 
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .knr-add-to-cart-btn:hover {
+    opacity: 0.9;
+  }
+
+  .knr-add-to-cart-btn:disabled {
+    background-color: #6E6E6E;
+    cursor: not-allowed;
+  }
+
+  /* Information de livraison et de stock */
+  .knr-stock-info {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(10px, 0.75vw, 11px); 
+    line-height: 14px;
+    letter-spacing: -2%;
+    text-align: center;
+    color: #000000;
+  }
+
+  /* Accordéons */
+  .knr-accordion {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #E0DDD6;
+  }
+
+   .knr-bottom-left-photos {
+    display: flex;
+    gap: 16px;                      
+    flex: 1;
+    margin-left: calc(-50vw + 50%); 
+    margin-right: 0 !important;     
+    margin-top: 20px;               
+    height: 617px;                  /* Fixé à 617px */
+  }
+
+
+  .knr-bottom-photo-wrapper {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    background-color: #F4F1EB;
+  }
+
+  .knr-bottom-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .knr-accordion-item {
+    border-bottom: 1px solid #E0DDD6;
+    margin-bottom: 10px;  
+  }
+
+  .knr-accordion-header {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 16px 0; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 0.9vw, 14px); 
+    font-weight: 400;
+    color: #000000;
+    cursor: pointer;
+  }
+
+  .knr-accordion-content {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 0.8vw, 13px); 
+    line-height: 1.6; 
+    color: #4A4A4A;
+    padding-bottom: 16px;
+    display: none;
+  }
+
+   .knr-accordion-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .knr-accordion-icon-svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.25s ease; /* Rotation fluide de l'icône */
+    display: block;
+    color: #000000;
+  }
+
+  .knr-accordion-item.active .knr-accordion-icon-svg {
+    transform: rotate(180deg);
+  }
+
+  /* Carrousel */
+  .knr-carousel-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .knr-carousel-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .knr-carousel-title-row h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 0.9vw, 14px); 
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-carousel-icon-arrow {
+    font-size: 12px;
+    color: #000000;
+  }
+
+  .knr-carousel-track {
+    display: flex;
+    gap: 16px; 
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 10px;
+  }
+
+  .knr-carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .knr-carousel-card {
+    flex: 0 0 calc(46% - 8px); 
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .knr-card-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%; 
+    background-color: #F4F1EB;
+    overflow: hidden;
+  }
+
+  .knr-card-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; 
+    height: 90%;
+    object-fit: contain; 
+    object-position: center;
+    background-color: #F4F1EB;
+  }
+
+  /* Bouton d'ajout rapide "+" */
+  .knr-quick-add-btn {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    width: clamp(28px, 2vw, 32px); 
+    height: clamp(28px, 2vw, 32px); 
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    color: #000000;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    z-index: 2;
+  }
+
+  .knr-quick-add-btn:hover {
+    transform: scale(1.05);
+    background-color: #F4F1EB;
+  }
+
+  .knr-plus-svg {
+    width: 14px; 
+    height: 14px;
+  }
+
+  .knr-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 0.8vw, 12px); 
+    line-height: 14px;
+  }
+
+  .knr-card-title {
+    font-weight: 400;
+    color: #000000;
+  }
+
+  .knr-card-price {
+    font-weight: 400;
+    color: #6E6E6E;
+  }
+
+  /* ---------------------------------------------------------
+     5. RESPONSIVE DESIGN (MOBILE / TABLETTE)
+     --------------------------------------------------------- */
+  @media (max-width: 991px) {
+    .knr-hero-section {
+      height: auto;
+      padding: 100px 20px 40px;
+    }
+    .knr-hero-container {
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+    }
+    .knr-bottom-container {
+      padding: 40px 20px;
+      justify-content: center;
+    }
+    .knr-product-sheet-top {
+      height: auto;
+      position: relative; /* Désactive le positionnement absolu sur mobile */
+      bottom: auto;
+      right: auto;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      padding-bottom: 40px;
+      padding-top: 40px;
+    }
+    .knr-product-sheet-bottom {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      padding-top: 40px;
+    }
+    .knr-product-sheet-top, .knr-product-sheet-bottom {
+      width: 100%;
+      max-width: 480px;
+    }
+    .knr-carousel-card {
+      flex: 0 0 calc(70% - 8px);
+    }
+  }
+  
+
+
+   /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION ENGAGEMENT (HAUTEUR 720PX)
+     --------------------------------------------------------- */
+  .section-product-engagement {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-engagement-section {
+    width: 100vw;
+    height: 720px; /* FIXE : Conforme aux spécifications Figma */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    /* Image de fond ba9711f8e3188ac9a1a699bed15347ddc4f5dabe.png avec fallback sécurisé */
+    background: 
+      linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%),
+      url("{{ 'ba9711f8e3188ac9a1a699bed15347ddc4f5dabe.png' | asset_url }}") no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    border-bottom: 1px solid #E0DDD6;
+  }
+
+  .knr-engagement-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     2. ZONE GAUCHE (TEXTE ENPETIT & LIGNE DE SÉPARATEUR)
+     --------------------------------------------------------- */
+  .knr-engagement-left {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .knr-engagement-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 14px;
+    color: #FCFBFC;
+    opacity: 0.8;
+  }
+
+  .knr-engagement-line {
+    width: 32px;
+    height: 1px;
+    background-color: #FCFBFC;
+  }
+
+  /* ---------------------------------------------------------
+     3. ZONE DROITE (PARAGRAPHE ENGAGEMENT ET SIGNATURE)
+     --------------------------------------------------------- */
+  .knr-engagement-right {
+    width: 561px; /* Alignement parfait sur la largeur de la fiche produit du bas */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Spécifications typographiques Figma exactes */
+  .knr-engagement-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;      /* Conforme Figma */
+    line-height: 40px;    /* Conforme Figma */
+    letter-spacing: -4%;  /* Conforme Figma */
+    color: #FFFFFF;
+    margin: 0;
+  }
+
+  .knr-engagement-author {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #E0DDD6;
+  }
+
+  /* ---------------------------------------------------------
+     4. FICHE PRODUIT FLOTTANTE HORIZONTALE (HAUTEUR 120PX)
+     --------------------------------------------------------- */
+  .knr-floating-product-card {
+    position: absolute;
+    bottom: -60px; /* Chevauchement de moitié (120px / 2) */
+    right: 40px;
+    width: 561px;  /* S'aligne parfaitement sous la largeur du paragraphe de droite */
+    height: 120px; /* Conforme Figma */
+    background-color: #FFFFFF;
+    border: 1px solid #E0DDD6;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 20;
+  }
+
+  .knr-float-img-wrapper {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    background-color: #F4F1EB;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .knr-float-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+  }
+
+  .knr-float-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    flex-grow: 1;
+  }
+
+  .knr-float-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Tailles alignées horizontalement */
+  .knr-float-sizes {
+    display: flex;
+    gap: 12px;
+  }
+
+  .knr-float-size-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    color: #6E6E6E;
+    padding: 2px 0px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .knr-float-size-btn.active {
+    color: #000000;
+    border-bottom: 1px solid #000000;
+    font-weight: 600;
+  }
+
+  .knr-float-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+  }
+
+  .knr-float-atc-btn {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+    border: none;
+    border-radius: 2px;
+    height: 44px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .knr-float-atc-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Responsive mobile */
+  @media (max-width: 991px) {
+    .knr-engagement-section {
+      height: auto;
+      padding: 80px 20px 100px;
+    }
+    .knr-engagement-container {
+      flex-direction: column;
+      gap: 40px;
+      padding: 0;
+    }
+    .knr-engagement-left, .knr-engagement-right {
+      width: 100%;
+    }
+    .knr-floating-product-card {
+      width: calc(100% - 40px);
+      left: 20px;
+      right: 20px;
+      bottom: -60px;
+    }
+  }
+
+  @media (max-width: 767px) {
+  /* 1. Force l'affichage du bloc prix à côté du titre */
+  .knr-mobile-only-price {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+    margin-left: auto !important;
+  }
+
+  .knr-price {
+    font-size: 16px !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+  }
+
+  /* 2. Ajustement du conteneur Titre + Prix */
+  .knr-product-title-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+  }
+
+  .knr-product-title {
+    font-size: 15px !important;
+    max-width: 65% !important; /* Laisse de la place au prix à droite */
+    margin: 0 !important;
+  }
+
+  /* 3. Avis et Étoiles passent en dessous sur toute la largeur */
+  .knr-product-rating {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin-top: 8px !important;
+  }
+}
+
+  @media (max-width: 767px) {
+  /* On force les deux fiches à avoir exactement la même largeur calculée */
+  .knr-product-sheet-top, 
+  .knr-product-sheet-bottom {
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* On supprime les paddings des conteneurs parents qui pourraient décaler la fiche 2 */
+  .knr-hero-container,
+  .knr-bottom-container {
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* On s'assure que la colonne de détails n'ajoute pas de contrainte */
+  .knr-details-column {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+
+/* --- PROTECTION PC (Cache le nouveau bloc prix) --- */
+.knr-mobile-price-stack {
+  display: none !important;
+}
+
+/* --- CORRECTION MOBILE --- */
+@media (max-width: 767px) {
+  /* 1. Cache l'ancien prix du bas */
+  .knr-variants-price-block .knr-price-row, 
+  .knr-variants-price-block #knr-unit-price {
+    display: none !important;
+  }
+
+  /* 2. Layout du titre et du prix en haut */
+  .knr-product-title-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .knr-product-title {
+    font-size: 15px !important;
+    flex: 1 !important;
+    margin: 0 !important;
+    text-transform: uppercase;
+  }
+
+  /* 3. Bloc Prix Statique à droite */
+  .knr-mobile-price-stack {
+    display: flex !important; /* On l'affiche sur mobile */
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+    margin-left: 10px !important;
+  }
+
+  .knr-price-line { display: flex; gap: 6px; align-items: baseline; }
+  .knr-price-line .knr-price { font-size: 14px !important; font-weight: 600; color: #000; }
+  .knr-price-line .knr-compare-price { font-size: 12px !important; color: #B5A282; text-decoration: line-through; }
+  .knr-unit-price-mobile { font-size: 9px !important; color: #B5A282; margin-top: 2px; }
+
+  /* 4. Avis sur une seule ligne en dessous */
+  .knr-product-rating {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 8px !important;
+  }
+
+  /* 5. Variantes (15ml / 150ml) Pleine Largeur */
+  .knr-variant-selector {
+    display: flex !important;
+    width: 100% !important;
+    gap: 0 !important;
+    border-bottom: 1px solid #E0DDD6 !important;
+    margin: 15px 0 !important;
+  }
+  .knr-variant-btn {
+    flex: 1 !important;
+    text-align: center !important;
+    padding: 10px 0 !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* 1. Affiche le prix en haut à côté du titre */
+  .knr-mobile-only-price {
+    display: flex !important;
+    gap: 8px;
+    align-items: baseline;
+  }
+
+  /* 2. Cache l'ancien bloc prix (celui qui est sous les tailles) pour éviter le double prix */
+  .knr-variants-price-block .knr-price-row {
+    display: none !important;
+  }
+  
+  /* Optionnel : cacher aussi le prix unitaire (ex: 75€ par 100ml) s'il n'est pas sur la maquette mobile */
+  #knr-unit-price {
+    display: none !important;
+  }
+}
+
+/* Cache le prix mobile sur la version PC */
+.knr-mobile-only-price {
+  display: none !important;
+}
+
+  @media (max-width: 767px) {
+  /* 1. Couleur de fond de page globale sur mobile */
+  body,
+  .knr-bottom-section {
+    background-color: #F4F1EB !important;
+  }
+
+  /* 2. Réinitialisation des décalages */
+  .knr-hero-section,
+  .knr-bottom-section {
+    left: auto !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+.knr-bottom-section {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  margin-left: -50vw !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  box-sizing: border-box !important;
+}
+  /* 3. Configuration du conteneur Hero pour afficher la photo mobile */
+  .knr-hero-section {
+  background: #F4F1EB !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-bottom: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  /* Force l'image à prendre toute la largeur absolue du téléphone */
+  width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  margin-left: -50vw !important;
+}
+
+  /* Affiche l'image mobile spécifique au-dessus de la fiche */
+  .knr-hero-section::before {
+  content: "" !important;
+  display: block !important;
+  width: 100% !important;
+  height: 480px !important; /* Hauteur ajustée pour valoriser la photo du produit */
+  flex-shrink: 0 !important;
+  background-image: url("{{ 'Product Image.png' | asset_url }}") !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+}
+
+  .knr-hero-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    height: auto !important;
+  }
+
+  .knr-product-sheet-top {
+  position: relative !important;
+  width: calc(100vw - 32px) !important; /* 16px de marge de chaque côté */
+  max-width: calc(100vw - 32px) !important;
+  margin: -20px auto 0 auto !important; /* Aligné au centre et collé à la photo */
+  padding: 32px 20px 24px 20px !important;
+  background-color: #FFFFFF !important;
+  border-radius: 4px 4px 0 0 !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important;
+  box-sizing: border-box !important;
+  z-index: 5 !important;
+}
+
+.knr-product-sheet-bottom {
+  position: relative !important;
+  width: calc(100vw - 32px) !important; /* Strictement identique au premier bloc */
+  max-width: calc(100vw - 32px) !important;
+  margin: 0 auto !important; /* Aligné au centre et collé au premier bloc */
+  height: auto !important;
+  padding: 20px 20px 40px 20px !important;
+  background-color: #FFFFFF !important;
+  border-radius: 0 0 4px 4px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important;
+  box-sizing: border-box !important;
+  gap: 32px !important;
+}
+
+  /* 5. Repositionnement des badges (abaissés sur la photo) */
+  .knr-product-tags {
+    position: absolute !important;
+    top: -410px !important; /* Légèrement abaissé pour un meilleur rendu sous le header */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    z-index: 100 !important;
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+  .knr-tag {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E0DDD6 !important;
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .knr-bottom-container {
+  width: 100% !important; /* Prend les 100vw de son parent */
+  max-width: 100% !important;
+  padding: 0 !important; /* Supprime le padding mobile par défaut qui rétrécissait la fiche 2 */
+  margin: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+  .knr-details-column {
+    width: 100% !important;
+  }
+
+  /* Masque les deux photos d'ambiance complémentaires */
+  .knr-bottom-left-photos {
+    display: none !important;
+  }
+
+  /* Largeur du carrousel sur mobile */
+  .knr-carousel-card {
+  flex: 0 0 calc(43% - 10px) !important; /* Ajustement précis pour afficher 2 produits complets + aperçu du 3e */
+}
+
+.knr-carousel-track {
+  display: flex !important;
+  gap: 12px !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+}
+}
+
+  /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION (HAUTEUR FIGMA 834PX)
+     --------------------------------------------------------- */
+  .section-how-to-use {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-how-to-use-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    min-height: 834px; /* Conforme à la hauteur Figma de 834px */
+    display: flex;
+    align-items: center; /* Centre verticalement le contenu de la section */
+    box-sizing: border-box;
+    padding: 80px 0;
+  }
+
+  .knr-how-to-use-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px; /* Espacement entre le titre et la grille */
+    box-sizing: border-box;
+  }
+
+  /* Titre Principal de la section (How to use) */
+  .knr-how-to-use-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;      /* Conforme Figma */
+    line-height: 40px;    /* Conforme Figma */
+    letter-spacing: -4%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+    text-align: left;     /* Aligné à gauche comme sur la maquette */
+  }
+
+  /* ---------------------------------------------------------
+     2. GRILLE A 3 COLONNES
+     --------------------------------------------------------- */
+  .knr-how-to-use-grid {
+    display: flex;
+    gap: 16px; /* Écart régulier de 16px entre les colonnes */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .knr-how-to-use-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Conteneur d'image carré (Ratio 1:1) */
+  .knr-step-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Ratio parfait 1:1 */
+    background-color: #F4F1EB;
+    overflow: hidden;
+  }
+
+  .knr-step-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Contenu textuel de chaque étape */
+  .knr-step-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .knr-step-number {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #6E6E6E;
+  }
+
+  .knr-step-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-step-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    color: #000000;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+  .knr-how-to-use-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    
+    /* FIX ICI : Ces deux lignes créent le décalage à gauche */
+    padding-left: 20px !important; 
+    scroll-padding-left: 20px !important; 
+    
+    padding-right: 40px !important;
+    gap: 16px !important;
+    scrollbar-width: none !important;
+  }
+
+  .knr-how-to-use-col {
+    flex: 0 0 85% !important; /* Ajuste à 85% pour bien voir le preview du 2e */
+    scroll-snap-align: start !important;
+  }
+}
+@media (max-width: 767px) {
+  /* Forcer la section à prendre toute la largeur sans marges blanches */
+  .knr-how-to-use-section {
+    padding: 30px 0 !important;
+    width: 100vw !important;
+    margin-left: -50vw !important;
+    left: 50% !important;
+    position: relative !important;
+    background: #FFFFFF !important;
+    min-height: auto !important;
+  }
+
+  .knr-how-to-use-container {
+    padding: 0 !important;
+    max-width: 100vw !important;
+    gap: 20px !important;
+  }
+
+  .knr-how-to-use-title {
+    margin-left: 20px !important;
+    font-size: 28px !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  /* Configuration Carousel : 1 carte pleine + preview */
+  .knr-how-to-use-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 12px !important;
+    padding: 0 20px 20px 20px !important; /* Padding gauche pour aligner la 1ere carte */
+    scrollbar-width: none !important;
+  }
+  .knr-how-to-use-grid::-webkit-scrollbar { display: none !important; }
+
+  .knr-how-to-use-col {
+    flex: 0 0 88% !important; /* 88% permet d'afficher 1 carte et un petit morceau de la 2e */
+    scroll-snap-align: start !important;
+    width: 88% !important;
+  }
+
+  .knr-step-img-wrapper {
+    padding-bottom: 100% !important; /* Reste carré */
+  }
+
+  /* Design de la barre de progression (Trait fin) */
+  .knr-how-to-progress-wrapper {
+    display: block !important;
+    width: 80px !important; /* Largeur totale du trait gris */
+    height: 1.5px !important;
+    background-color: #E0DDD6 !important;
+    margin: 10px auto 0 auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .knr-how-to-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 33.33% !important;
+    background-color: #000000 !important;
+    transition: transform 0.2s ease-out;
+  }
+}
+
+  
+  
+   /* ---------------------------------------------------------
+     1. STRUCTURE ET HAUTEUR DE LA SECTION (FIGMA 1368PX)
+     --------------------------------------------------------- */
+  .section-product-reviews {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-reviews-section {
+    width: 100vw;
+    min-height: 1368px; /* Conforme à la hauteur Figma de 1368px */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    padding: 80px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Répartit harmonieusement les blocs */
+    gap: 48px;
+  }
+
+  .knr-reviews-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    box-sizing: border-box;
+  }
+
+  /* En-tête de section */
+  .knr-reviews-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .knr-reviews-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;      /* Conforme Figma */
+    line-height: 40px;    /* Conforme Figma */
+    letter-spacing: -4%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-reviews-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #4A4A4A;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ---------------------------------------------------------
+     2. SLIDER DE COMPARAISON AVANT / APRÈS (INTERACTIF)
+     --------------------------------------------------------- */
+  .knr-comparison-wrapper {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .knr-comparison-slider {
+    position: relative;
+    width: 100%;
+    height: 680px; /* Hauteur équilibrée pour le comparateur */
+    overflow: hidden;
+    user-select: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    cursor: ew-resize;
+  }
+
+  /* Arrière-plan (Image APRÈS) */
+  .knr-after-img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .knr-after-img {
+    width: 1440px; /* Garde la même largeur absolue pour éviter la déformation */
+    max-width: none;
+    height: 130%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Premier plan (Image AVANT) */
+  .knr-before-img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; /* Largeur par défaut de 50% */
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .knr-before-img {
+    width: 1440px; /* Doit correspondre à l'image du dessous */
+    max-width: none;
+    height: 130%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Étiquettes BEFORE et AFTER */
+  .knr-slider-label {
+    position: absolute;
+    top: 32px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    z-index: 5;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .knr-label-before {
+    left: 32px;
+  }
+
+  .knr-label-after {
+    right: 32px;
+  }
+
+  /* Poignée de séparation interactive */
+  .knr-slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%; /* Aligné avec la largeur par défaut de 50% */
+    width: 2px;
+    background-color: #FFFFFF;
+    z-index: 10;
+  }
+
+  .knr-handle-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #000000;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+
+  /* ---------------------------------------------------------
+     3. SYSTEME DE TEMOIGNAGES (CAROUSEL SLIDER BAS)
+     --------------------------------------------------------- */
+  .knr-testimonial-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    box-sizing: border-box;
+    padding: 0 40px;
+  }
+
+  .knr-testimonial-stars {
+    color: #B5A282;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  .knr-testimonial-author {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #B5A282;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Citation large conforme aux spécifications de texte 32px de Figma */
+  .knr-testimonial-quote {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;      /* Conforme Figma */
+    line-height: 40px;    /* Conforme Figma */
+    letter-spacing: -4%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+    max-width: 900px;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Flèches de navigation minimalistes */
+  .knr-testimonial-nav {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 16px;
+  }
+
+  .knr-nav-arrow {
+    background: transparent;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #000000;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .knr-nav-arrow:hover {
+    opacity: 0.6;
+  }
+
+  /* Responsive mobile */
+  @media (max-width: 991px) {
+    .knr-reviews-section {
+      height: auto;
+      padding: 60px 20px;
+    }
+    .knr-reviews-container {
+      padding: 0;
+      gap: 32px;
+    }
+    .knr-comparison-wrapper {
+      padding: 0;
+    }
+    .knr-comparison-slider {
+      height: 350px;
+    }
+    .knr-slider-label {
+      top: 16px;
+    }
+    .knr-testimonial-container {
+      padding: 0;
+    }
+    .knr-testimonial-quote {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
+
+  @media (max-width: 991px) {
+  /* 1. Ajustement de la section pour voir toute la pipette en fond */
+  .knr-engagement-section {
+    height: auto !important;
+    min-height: 650px !important; /* Hauteur suffisante pour l'image pipette */
+    padding: 60px 24px !important;
+  }
+
+  .knr-engagement-container {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    gap: 40px !important;
+  }
+
+  /* 2. MASQUER la carte d'ajout au panier (Floating Card) */
+  .knr-floating-product-card {
+    display: none !important;
+  }
+
+  /* 3. Bloc du haut (Titre d'engagement) */
+  .knr-engagement-left {
+    width: 100% !important;
+    order: 1 !important;
+  }
+
+  .knr-engagement-sub {
+    font-size: 11px !important;
+    line-height: 14px !important;
+    color: #FFFFFF !important;
+    opacity: 0.9 !important;
+  }
+
+  /* 4. Bloc du bas (Gros texte + Auteur) */
+  .knr-engagement-right {
+    width: 100% !important;
+    order: 2 !important;
+    gap: 16px !important;
+  }
+
+  /* Design exact selon votre capture Figma (22px / 24px) */
+  .knr-engagement-text {
+    font-size: 22px !important;
+    line-height: 24px !important;
+    letter-spacing: -0.04em !important;
+    font-weight: 400 !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
+  }
+
+  /* Signature / Doctor Name */
+  .knr-engagement-author {
+    font-size: 11px !important;
+    color: #FFFFFF !important;
+    opacity: 0.8 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* 1. Réduire les espaces (gaps) de la section globale */
+  .knr-reviews-section {
+    padding: 20px 0 !important; /* Réduit le gap haut/bas de la section */
+    gap: 24px !important;      /* Réduit l'espace entre le titre, l'image et le texte */
+    min-height: auto !important;
+  }
+
+  /* 2. Réduire l'espace sous le texte d'en-tête */
+  .knr-reviews-container {
+    gap: 10px !important;
+  }
+
+  /* 3. Centrer la photo et supprimer le zoom excessif */
+  .knr-comparison-slider {
+    height: 400px !important; /* Ajuste la hauteur du cadre photo */
+    margin: 0 !important;
+  }
+
+  .knr-after-img,
+  .knr-before-img {
+    height: 100% !important;        /* On repasse à 100% pour éviter le décalage */
+    width: 100vw !important;        /* Occupe toute la largeur */
+    object-fit: cover !important;
+    object-position: center center !important; /* Centrage parfait du visage */
+  }
+
+  /* 4. Réduire les étiquettes BEFORE/AFTER */
+  .knr-slider-label {
+    top: 15px !important;
+    font-size: 10px !important;
+  }
+
+  /* 5. Aligner les avis du bas */
+  .knr-testimonial-container {
+    gap: 16px !important;
+    padding: 0 24px !important;
+  }
+
+  .knr-testimonial-quote {
+    font-size: 20px !important; /* Plus adapté à la lecture mobile */
+    line-height: 26px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .knr-engagement-section {
+    /* Remplace l'image par la pipette en version mobile */
+    background: url("{{ 'Screenshot 2026-06-06 222752.png' | asset_url }}") no-repeat center center !important;
+    background-size: cover !important;
+    
+    /* On ajuste la hauteur pour que la pipette soit bien visible */
+    height: 100vh !important; 
+    min-height: 700px !important;
+  }
+
+  /* Assure que le texte reste bien lisible sur ce nouveau fond */
+  .knr-engagement-text {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+}
+
+  /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION FAQ (HAUTEUR FIGMA 788PX)
+     --------------------------------------------------------- */
+  .section-product-faq {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-product-faq-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    min-height: 788px; /* Conforme à la hauteur Figma de 788px */
+    display: flex;
+    align-items: center; /* Centre verticalement le contenu de la section */
+    box-sizing: border-box;
+    padding: 80px 0;
+  }
+
+  .knr-product-faq-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px; /* Espace entre le titre et la liste */
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Titre Principal (Questions fréquentes) */
+  .knr-product-faq-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;      /* Conforme Figma */
+    line-height: 40px;    /* Conforme Figma */
+    letter-spacing: -4%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ---------------------------------------------------------
+     2. ACCORDÉONS FAQ CENTRÉS & ADAPTATIFS
+     --------------------------------------------------------- */
+  .knr-faq-list {
+    width: clamp(600px, 60vw, 900px); /* Largeur adaptative parfaitement centrée */
+    border-top: 1px solid #E0DDD6;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .knr-faq-item {
+    border-bottom: 1px solid #E0DDD6;
+  }
+
+  .knr-faq-header {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 24px 0; /* Espacement confortable et premium */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px; /* Taille de police confortable pour les questions */
+    font-weight: 400;
+    color: #000000;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .knr-faq-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #4A4A4A;
+    padding-bottom: 24px;
+    display: none; /* Masqué par défaut */
+  }
+
+  /* Icône chevron fine rotative */
+  .knr-faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .knr-faq-icon-svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.25s ease;
+    display: block;
+    color: #000000;
+  }
+
+  /* Rotation lors de l'activation */
+  .knr-faq-item.active .knr-faq-icon-svg {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 767px) {
+  /* 1. Section prend 100% de la largeur mais le contenu respire */
+  .knr-product-faq-section {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    margin-left: -50vw !important;
+    padding: 30px 24px !important; /* Réduit les gaps haut/bas et empêche le texte de coller aux bords */
+    min-height: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .knr-product-faq-container {
+    width: 100% !important;
+    padding: 0 !important;
+    gap: 24px !important; /* Espace entre le titre et la liste */
+    align-items: flex-start !important; /* Aligne le titre à gauche comme la maquette */
+  }
+
+  /* 2. Titre conforme à la maquette mobile */
+  .knr-product-faq-title {
+    font-size: 32px !important;
+    line-height: 40px !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  /* 3. Liste d'accordéons */
+  .knr-faq-list {
+    width: 100% !important; /* Prend toute la largeur disponible */
+  }
+
+  .knr-faq-header {
+    font-size: 24px !important; /* Taille de police des questions selon maquette */
+    padding: 24px 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  .knr-faq-content {
+    font-size: 14px !important;
+    line-height: 20px !important;
+    padding-bottom: 24px !important;
+    color: #000000 !important;
+    opacity: 0.8;
+  }
+
+  /* Ajustement de l'icône chevron */
+  .knr-faq-icon-svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+  /* Responsive mobiles et tablettes */
+  @media (max-width: 991px) {
+    .knr-product-faq-section {
+      height: auto;
+      padding: 60px 20px;
+    }
+    .knr-product-faq-container {
+      padding: 0;
+      gap: 32px;
+    }
+    .knr-faq-list {
+      width: 100%;
+    }
+    .knr-faq-header {
+      font-size: 15px;
+      padding: 20px 0;
+    }
+  }
+
+  /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION DASHBOARD (FIGMA 1004PX)
+     --------------------------------------------------------- */
+  .section-reviews-dashboard {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-reviews-dashboard-section {
+    width: 100vw;
+    min-height: 1004px; /* Hauteur conforme Figma (extensible au clic de Charger Plus) */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    padding: 80px 0;
+  }
+
+  .knr-reviews-dashboard-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .knr-dashboard-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -4%;
+    color: #000000;
+    text-align: center;
+    margin: 0 0 48px 0;
+  }
+
+  /* ---------------------------------------------------------
+     2. GRILLE SYNTHÉTIQUE DES AVIS (3 COLONNES)
+     --------------------------------------------------------- */
+  .knr-reviews-summary-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 40px;
+    box-sizing: border-box;
+    padding-bottom: 32px;
+  }
+
+  /* Colonne 1 : Score moyen */
+  .knr-summary-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 180px;
+  }
+
+  @media (max-width: 991px) {
+  /* 1. Centre tout le bloc de résumé de gauche */
+  .knr-summary-left {
+    width: 100% !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+    min-width: unset !important;
+  }
+
+  /* 2. Centre la ligne d'étoiles et le score 4.7 */
+  .knr-summary-stars-row {
+    justify-content: center !important;
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+
+  /* 3. Style du texte "Basé sur 200 avis" (supprime le fond gris) */
+  .knr-summary-count-text {
+    background: transparent !important; /* Enlève le gris de la capture */
+    color: #6E6E6E !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+    font-size: 12px !important;
+  }
+}
+
+  .knr-summary-stars-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #000000;
+  }
+
+  .knr-summary-stars {
+    color: #B5A282;
+    letter-spacing: 1px;
+  }
+
+  .knr-summary-count-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #6E6E6E;
+  }
+
+  /* Colonne 2 : Barres de progression */
+  .knr-summary-center {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    max-width: 320px;
+  }
+
+  .knr-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #6E6E6E;
+  }
+
+  .knr-progress-stars {
+    color: #B5A282;
+    letter-spacing: 1px;
+    min-width: 65px;
+  }
+
+  .knr-progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: #F4F1EB;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .knr-progress-fill {
+    height: 100%;
+    background-color: #B5A282;
+    border-radius: 4px;
+  }
+
+  .knr-progress-count {
+    min-width: 16px;
+    text-align: right;
+  }
+
+  /* Colonne 3 : Boutons d'action */
+  .knr-summary-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 220px;
+  }
+
+  .knr-action-btn-black {
+    width: 220px;
+    height: 48px;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .knr-action-btn-outline {
+    width: 220px;
+    height: 48px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .knr-action-btn-black:hover { opacity: 0.9; }
+  .knr-action-btn-outline:hover { background-color: #F4F1EB; }
+
+  /* ---------------------------------------------------------
+     3. FILTRAGE ET LISTE DES AVIS CLIENTS
+     --------------------------------------------------------- */
+  .knr-filter-bar {
+    max-width: 1000px;
+    margin: 40px auto 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #000000;
+    padding: 24px 0 12px;
+    border-bottom: 1px solid #E0DDD6;
+  }
+
+  .knr-filter-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Liste des fiches avis */
+  .knr-reviews-list {
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .knr-review-card {
+    border-bottom: 1px solid #E0DDD6;
+    padding: 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-sizing: border-box;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  /* Classe masquée pour le bouton charger plus */
+  .knr-review-card.knr-hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .knr-review-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .knr-review-stars {
+    color: #B5A282;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .knr-review-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #6E6E6E;
+  }
+
+  .knr-review-author-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000000;
+  }
+
+  /* Badge Vérifié conforme */
+  .knr-verified-badge {
+    border: 0.8px solid #6E6E6E;
+    font-size: 8px;
+    padding: 2px 6px;
+    letter-spacing: 0.5px;
+    border-radius: 2px;
+    color: #6E6E6E;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .knr-review-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-review-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1E1E1E;
+    margin: 0;
+  }
+
+  /* Bouton Charger Plus */
+  .knr-load-more-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .knr-load-more-btn {
+    width: 240px;
+    height: 48px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .knr-load-more-btn:hover {
+    background-color: #F4F1EB;
+  }
+
+  /* ---------------------------------------------------------
+     5. FENÊTRE MODALE DE LEVE-AVIS INTERACTIVE
+     --------------------------------------------------------- */
+  .knr-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: none; /* Masqué par défaut */
+    align-items: center;
+    justify-content: center;
+  }
+
+  .knr-modal-card {
+    width: 480px;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    padding: 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  .knr-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #6E6E6E;
+  }
+
+  .knr-modal-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+  }
+
+  .knr-form-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #E0DDD6;
+    border-radius: 2px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+  }
+
+  .knr-form-textarea {
+    width: 100%;
+    height: 100px;
+    border: 1px solid #E0DDD6;
+    border-radius: 2px;
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    resize: none;
+  }
+
+  .knr-submit-form-btn {
+    width: 100%;
+    height: 44px;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  /* Responsive mobile */
+  @media (max-width: 991px) {
+    .knr-reviews-dashboard-section {
+      padding: 60px 20px;
+    }
+    .knr-reviews-dashboard-container {
+      padding: 0;
+    }
+    .knr-reviews-summary-grid {
+      flex-direction: column;
+      gap: 32px;
+      align-items: flex-start;
+    }
+    .knr-summary-center {
+      max-width: 100%;
+      width: 100%;
+    }
+    .knr-summary-right, .knr-action-btn-black, .knr-action-btn-outline {
+      width: 100%;
+    }
+    .knr-modal-card {
+      width: calc(100% - 40px);
+      margin: 20px;
+      padding: 24px;
+    }
+  }
+
+  /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION LATEST NEWS
+     --------------------------------------------------------- */
+  .section-latest-news {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-latest-news-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    padding: 80px 0;
+  }
+
+  .knr-latest-news-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Écart vertical entre l'en-tête et la grille */
+    box-sizing: border-box;
+  }
+
+  /* En-tête : Titre et Lien d'accès */
+  .knr-news-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+  }
+
+  .knr-news-main-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;      /* Conforme Figma */
+    line-height: 40px;    /* Conforme Figma */
+    letter-spacing: -4%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-news-all-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 0.8px solid #000000;
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+
+  .knr-news-all-link:hover {
+    opacity: 0.6;
+  }
+
+  /* ---------------------------------------------------------
+     2. GRILLE DE COMPOSANTS (4 COLONNES)
+     --------------------------------------------------------- */
+  .knr-news-grid {
+    display: flex;
+    gap: 16px; /* Écart régulier de 16px entre les colonnes */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .knr-news-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Conteneur d'image carré (Ratio 1:1) */
+  .knr-news-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Ratio 1:1 */
+    background-color: #F4F1EB;
+    overflow: hidden;
+  }
+
+  .knr-news-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Métadonnées : Tag et petite ligne */
+  .knr-news-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .knr-news-tag {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: #6E6E6E;
+  }
+
+  .knr-news-line {
+    width: 24px;
+    height: 1px;
+    background-color: #E0DDD6;
+  }
+
+  /* Contenu textuel de l'article */
+  .knr-news-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 24px;      /* Conforme Figma */
+    line-height: 32px;    /* Conforme Figma */
+    letter-spacing: -2%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-news-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;      /* Conforme Figma */
+    line-height: 22px;    /* Conforme Figma */
+    letter-spacing: -2%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+  /* 1. Section : Largeur 100% et gaps réduits */
+  .knr-latest-news-section {
+    padding: 30px 0 !important;
+    width: 100vw !important;
+    margin-left: -50vw !important;
+    left: 50% !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .knr-latest-news-container {
+    padding: 0 !important;
+    gap: 20px !important;
+  }
+
+  /* Titre aligné sur le bord gauche (20px) */
+  .knr-news-header-row {
+    padding: 0 20px !important;
+  }
+
+  /* 2. Carousel : 1 entier + preview du 2e */
+  .knr-news-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding-left: 20px !important;       /* Gap bord gauche */
+    scroll-padding-left: 20px !important; /* Aimante au gap de 20px */
+    padding-right: 40px !important;
+    padding-bottom: 20px !important;
+    scrollbar-width: none !important;
+  }
+  .knr-news-grid::-webkit-scrollbar { display: none !important; }
+
+  .knr-news-col {
+    flex: 0 0 85% !important; /* 85% pour voir l'aperçu du suivant */
+    scroll-snap-align: start !important;
+    width: 85% !important;
+  }
+
+  /* 3. Barre de progression (Trait fin) */
+  .knr-news-progress-wrapper {
+    display: block !important;
+    width: 80px !important;
+    height: 1.5px !important;
+    background-color: #E0DDD6 !important;
+    margin: 10px auto 0 auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .knr-news-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 25% !important; /* 25% car il y a 4 articles ici */
+    background-color: #000000 !important;
+    transition: transform 0.2s ease-out;
+  }
+}
+
+/* Cache la barre sur PC */
+.knr-news-progress-wrapper {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* On transforme le conteneur en colonne pour réordonner les éléments */
+  .knr-latest-news-container { 
+    display: flex !important; 
+    flex-direction: column !important; 
+  }
+
+  /* On "annule" la div de titre pour que ses enfants (titre et lien) soient indépendants */
+  .knr-news-header-row { 
+    display: contents !important; 
+  }
+
+  /* On définit l'ordre d'affichage (Titre > Grille > Progress > Lien) */
+  .knr-news-main-title { order: 1 !important; margin-bottom: 20px !important; }
+  .knr-news-grid { order: 2 !important; }
+  .knr-news-progress-wrapper { order: 3 !important; }
+
+  /* Le lien se place à la fin et se centre */
+  .knr-news-all-link {
+    order: 4 !important;
+    align-self: center !important;
+    margin-top: 30px !important;
+    display: block !important;
+    width: fit-content !important;
+    border-bottom: 1px solid #000 !important;
+  }
+}
+
+  /* Responsive pour tablettes et mobiles */
+  @media (max-width: 991px) {
+    .knr-latest-news-section {
+      padding: 60px 20px;
+    }
+    .knr-latest-news-container {
+      padding: 0;
+      gap: 32px;
+    }
+    .knr-news-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 2x2 sur tablette */
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .knr-news-grid {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+      gap: 32px;
+    }
+  }
+
+   /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION NEWSLETTER
+     --------------------------------------------------------- */
+  .section-newsletter {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-newsletter-section {
+    width: 100%;
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    padding: 80px 0;
+  }
+
+  .knr-newsletter-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    gap: 60px; /* Écart confortable entre l'image et le texte */
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Colonne Gauche : Image */
+  .knr-newsletter-left-media {
+    flex: 1;
+    height: 540px; /* Hauteur harmonisée de l'image de présentation */
+    overflow: hidden;
+    background-color: #F4F1EB;
+  }
+
+  .knr-newsletter-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Colonne Droite : Contenus textuels et Formulaire */
+  .knr-newsletter-right-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+  }
+
+  /* Spécifications typographiques Figma exactes (adaptatives pour toutes les résolutions) */
+  .knr-newsletter-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(28px, 2.5vw, 40px);     /* Conforme Figma (40px) */
+    line-height: clamp(34px, 3vw, 48px);    /* Conforme Figma (48px) */
+    letter-spacing: -4%;                     /* Conforme Figma (-4%) */
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Formulaire d'inscription */
+  .knr-newsletter-form {
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .knr-newsletter-form-row {
+    display: flex;
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+  }
+
+  .knr-newsletter-input {
+    flex: 1;
+    height: 100%;
+    border: 1px solid #E0DDD6;
+    border-right: none; /* Collé au bouton */
+    border-radius: 2px 0 0 2px;
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+    color: #000000;
+  }
+
+  .knr-newsletter-input::placeholder {
+    color: #6E6E6E;
+  }
+
+  .knr-newsletter-submit-btn {
+    height: 100%;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 0 2px 2px 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 0 32px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  .knr-newsletter-submit-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Description d'engagement sous le formulaire */
+  .knr-newsletter-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px;
+    color: #6E6E6E;
+    margin: 0;
+  }
+
+  .knr-newsletter-success {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #B5A282;
+    margin: 8px 0 0 0;
+  }
+
+  @media (max-width: 767px) {
+  /* 1. Section prend 100% de la largeur mais avec marges internes */
+  .knr-newsletter-section {
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    margin-left: -50vw !important;
+    padding: 40px 24px !important; /* Marges de 24px pour ne pas coller aux bords */
+    box-sizing: border-box !important;
+  }
+
+  .knr-newsletter-container {
+    flex-direction: column !important; /* Empilement vertical */
+    gap: 32px !important;
+    padding: 0 !important;
+  }
+
+  /* 2. Image en haut */
+  .knr-newsletter-left-media {
+    width: 100% !important;
+    height: 300px !important; /* Hauteur ajustée pour mobile */
+  }
+
+  /* 3. Texte avec design exact Figma */
+  .knr-newsletter-right-content {
+    width: 100% !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  .knr-newsletter-text {
+    font-size: 32px !important;      /* Selon votre capture Content */
+    line-height: 40px !important;    /* Selon votre capture Content */
+    letter-spacing: -0.04em !important; /* -4% selon votre capture */
+    margin-bottom: 24px !important;
+    color: #000000 !important;
+  }
+
+  /* 4. Formulaire empilé (Input en haut, Bouton en bas) */
+  .knr-newsletter-form-row {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 12px !important;
+  }
+
+  .knr-newsletter-input {
+    width: 100% !important;
+    height: 54px !important;
+    border: 1px solid #E0DDD6 !important;
+    border-radius: 2px !important;
+  }
+
+  .knr-newsletter-submit-btn {
+    width: 100% !important;
+    height: 54px !important;
+    border-radius: 2px !important;
+    font-size: 14px !important;
+    text-transform: none !important;
+  }
+
+  .knr-newsletter-desc {
+    margin-top: 16px !important;
+    font-size: 11px !important;
+    opacity: 0.7;
+  }
+}
+
+  /* Responsive mobiles */
+  @media (max-width: 991px) {
+    .knr-newsletter-section {
+      padding: 60px 20px;
+    }
+    .knr-newsletter-container {
+      flex-direction: column;
+      gap: 40px;
+      padding: 0;
+    }
+    .knr-newsletter-left-media {
+      width: 100%;
+      height: 350px;
+    }
+    .knr-newsletter-right-content {
+      width: 100%;
+    }
+  }
+
+  /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION DE RÉASSURANCE (HAUTEUR FIGMA 258PX)
+     --------------------------------------------------------- */
+  .section-reassurance {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-reassurance-section {
+    width: 100vw;
+    min-height: 258px; /* Conforme à la hauteur Figma de 258px */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: #dcd5c3; /* --color-bg-cream de votre thème */
+    box-sizing: border-box;
+    display: flex;
+    align-items: center; /* Centre verticalement les colonnes */
+    padding: 40px 0;
+  }
+
+  .knr-reassurance-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes régulières de même largeur */
+    gap: 32px; /* Espacement horizontal entre les colonnes */
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     2. DESIGN DE CHAQUE COLONNE
+     --------------------------------------------------------- */
+  .knr-reassurance-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Écart de 16px entre le titre et la description */
+    text-align: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Titre de colonne (LIVRAISON OFFERTE, RETOURS GRATUITS, etc.) */
+  .knr-reassurance-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;      /* Conforme Figma */
+    line-height: 14px;    /* Conforme Figma */
+    letter-spacing: -2%;  /* Conforme Figma */
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Description de colonne */
+  .knr-reassurance-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;      /* Conforme Figma */
+    line-height: 20px;    /* Conforme Figma (interligne de 20px) */
+    letter-spacing: -2%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+  }
+
+ @media (max-width: 767px) {
+  /* --- CHAMP EMAIL (INPUT) --- */
+  .knr-newsletter-input {
+    width: 100% !important;
+    height: 65px !important;       /* Ta grande hauteur */
+    line-height: 75px !important;  /* CRUCIAL : Force le texte au centre vertical */
+    font-size: 20px !important;
+    
+    /* On met 0 en haut/bas et 25px sur les côtés pour que le texte ne bouge pas de sa ligne centrale */
+    padding: 0 25px !important;    
+    
+    display: block !important;
+    box-sizing: border-box !important;
+    border: 1px solid #E0DDD6 !important;
+    border-radius: 2px !important;
+  }
+
+  /* --- TEXTE PAR DÉFAUT (PLACEHOLDER) --- */
+  .knr-newsletter-input::placeholder {
+    font-size: 18px !important;
+    line-height: 75px !important; /* On répète ici pour certains navigateurs */
+    color: #6E6E6E !important;
+    vertical-align: middle !important;
+  }
+
+}
+
+  @media (max-width: 767px) {
+  /* 1. Section : Background beige et largeur totale */
+  .knr-reassurance-section {
+    background-color: #dcd5c3 !important; /* Couleur beige de la maquette */
+    width: 100vw !important;
+    position: relative !important;
+    left: 50% !important;
+    margin-left: -50vw !important;
+    padding: 60px 0 !important;
+    min-height: auto !important;
+  }
+
+  /* 2. Container : Carousel horizontal (1 seul visible) */
+  .knr-reassurance-container {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 0 !important; /* Pas d'espace entre les slides pour afficher 1 par 1 */
+    scrollbar-width: none !important;
+    padding: 0 !important;
+  }
+  .knr-reassurance-container::-webkit-scrollbar { display: none !important; }
+
+  .knr-reassurance-col {
+    flex: 0 0 100% !important; /* Prend toute la largeur */
+    scroll-snap-align: center !important;
+    padding: 0 40px !important;
+    text-align: center !important;
+  }
+
+  /* 3. Textes */
+  .knr-reassurance-title {
+    font-size: 14px !important;
+    margin-bottom: 12px !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .knr-reassurance-desc {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    br { display: none; } /* On enlève les retours à la ligne forcés sur mobile */
+  }
+
+  /* 4. Traits de progression (Progress dots) */
+  .knr-reassurance-progress {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 40px !important;
+    width: 100% !important;
+    position: absolute !important;
+    bottom: 30px;
+    left: 0;
+  }
+
+  .reassurance-dot {
+    width: 24px !important; /* Longueur du trait */
+    height: 1.5px !important; /* Épaisseur fine */
+    background-color: rgba(0,0,0,0.1) !important; /* Couleur inactive */
+    transition: background-color 0.3s ease;
+  }
+
+  .reassurance-dot.active {
+    background-color: #000000 !important; /* Couleur active (Noir) */
+  }
+}
+
+/* Cache les traits sur PC */
+.knr-reassurance-progress { display: none; }
+
+  /* Responsive pour tablettes et mobiles */
+  @media (max-width: 991px) {
+    .knr-reassurance-section {
+      height: auto;
+      padding: 40px 20px;
+    }
+    .knr-reassurance-container {
+      grid-template-columns: repeat(2, 1fr); /* 2x2 colonnes sur tablette */
+      gap: 40px 24px;
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .knr-reassurance-container {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+      gap: 32px;
+    }
+  }
+
+   /* ---------------------------------------------------------
+     1. STRUCTURE DE LA SECTION PIED DE PAGE (HAUTEUR FIGMA 392PX)
+     --------------------------------------------------------- */
+  .section-product-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-footer-section {
+    width: 100vw;
+    min-height: 392px; /* Conforme à la hauteur Figma de 392px */
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: #FCFBF9; /* Fond crème clair conforme */
+    box-sizing: border-box;
+    display: flex;
+    align-items: center; /* Centre verticalement les colonnes */
+    padding: 60px 0;
+    border-top: 1px solid #E0DDD6;
+  }
+
+  .knr-footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes régulières de même largeur */
+    gap: 40px; /* Espacement horizontal entre les colonnes */
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     2. DESIGN DES COLONNES DE LIENS ET DU TEXTE
+     --------------------------------------------------------- */
+  .knr-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Écart vertical régulier entre le titre et la liste */
+    box-sizing: border-box;
+  }
+
+  /* Titre de colonne */
+  .knr-footer-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Liste verticale de liens */
+  .knr-footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Écart vertical entre les liens individuels */
+  }
+
+  .knr-footer-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .knr-footer-link:hover {
+    opacity: 0.6;
+  }
+
+  /* ---------------------------------------------------------
+     3. COLONNE 4 : À PROPOS & CERTIFICATION COSMOS BIO
+     --------------------------------------------------------- */
+  .knr-about-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;      /* Conforme Figma */
+    line-height: 20px;    /* Conforme Figma (interligne de 20px) */
+    letter-spacing: -2%;  /* Conforme Figma */
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Bloc de logo et de certification */
+  .knr-cert-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-top: 16px;
+    border-bottom: 0.8px solid #E0DDD6;
+    padding-bottom: 16px;
+  }
+
+  /* Logo Calque_1.png (Cosmos Organic) */
+  .knr-cert-logo {
+    height: 44px; /* Taille proportionnelle */
+    width: auto;
+    display: block;
+  }
+
+  .knr-cert-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Lien vers le certificat souligné */
+  .knr-cert-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 0.8px solid #000000;
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: opacity 0.2s;
+    margin-top: 12px;
+  }
+
+  .knr-cert-link:hover {
+    opacity: 0.6;
+  }
+
+  /* Responsive pour tablettes et mobiles */
+  @media (max-width: 991px) {
+    .knr-footer-section {
+      height: auto;
+      padding: 40px 20px;
+    }
+    .knr-footer-container {
+      grid-template-columns: repeat(2, 1fr); /* 2x2 colonnes sur tablette */
+      gap: 40px 24px;
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .knr-footer-container {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+      gap: 32px;
+    }
+  }
+
+</style>
+
+<!-- ==========================================
+     A. FICHE PRODUIT : PARTIE SUPERIEURE (HERO)
+     ========================================== -->
+<div class="knr-hero-section">
+  <div class="knr-hero-container">
+    
+    <!-- Fiche produit haute -->
+    <div class="knr-product-sheet-top">
+      
+      <!-- Groupe haut : Textes et détails du produit -->
+      <div class="knr-sheet-top-group">
+        <!-- Fil d'Ariane -->
+        <div class="knr-product-breadcrumb">Soins anti-âge / Collection Cactus</div>
+        
+        <!-- Badges -->
+        <div class="knr-product-tags">
+          <span class="knr-tag">UNIFIE</span>
+          <span class="knr-tag">PROTÈGE</span>
+        </div>
+        
+        <!-- Titre et Avis -->
+        <!-- CHANGER CE BLOC DANS LE HTML -->
+<div class="knr-product-title-row">
+  <!-- Titre à gauche -->
+  <h1 class="knr-product-title">{{ product.title | default: "SÉRUM PRÉCIEUX RÉGÉNÉRANT" }}</h1>
+  
+  <!-- Bloc Prix à droite (Stack vertical) -->
+  <div class="knr-mobile-price-stack">
+      <div class="knr-price-line">
+          <span class="knr-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+          <span class="knr-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+      </div>
+      <div class="knr-unit-price-mobile">75,00 € par 100 mL</div>
+  </div>
+
+  <!-- Ligne des avis en dessous -->
+  <div class="knr-product-rating">
+    <div class="knr-stars">★★★★★ <span class="knr-rating-score">4.7</span></div>
+    <span class="knr-reviews-count">200 avis</span>
+  </div>
+</div>
+        
+        <!-- Yuka & INCI -->
+        <div class="knr-ratings-row">
+          <span class="knr-bold">Yuka</span> 100/100 · <span class="knr-bold">INCI Beauty</span> 20/20
+        </div>
+        
+        <!-- Petite description descriptive -->
+        <div class="knr-product-intro">
+          {{ product.description | default: "Une huile anti-âge sèche ultra fine qui travaille en synergie avec la peau pour la maintenir ferme, pleine de vitalité tout en lissant les rides." }}
+        </div>
+      </div>
+      
+      <!-- Groupe bas : Options de tailles, Prix et Ajouter au panier -->
+      <div class="knr-sheet-bottom-group">
+        <!-- Taille & Prix -->
+        <div class="knr-variants-price-block">
+          <div class="knr-option-title">Taille</div>
+          
+          <!-- Sélecteur de taille dynamique -->
+          <div class="knr-variant-selector">
+            {%- for variant in product.variants -%}
+              <button type="button" 
+                      class="knr-variant-btn {% if forloop.first %}active{% endif %}" 
+                      data-id="{{ variant.id }}" 
+                      data-price="{{ variant.price | money }}"
+                      data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}">
+                {{ variant.title }}
+              </button>
+            {%- else -%}
+              <!-- Fallbacks de développement local -->
+              <button type="button" class="knr-variant-btn active" data-id="123456789" data-price="75,00 €" data-compare-price="85,00 €">15 mL</button>
+              <button type="button" class="knr-variant-btn" data-id="987654321" data-price="250,00 €" data-compare-price="">150 mL</button>
+            {%- endfor -%}
+          </div>
+          
+          <!-- Affichage des prix -->
+          <div class="knr-price-row">
+            <span class="knr-price" id="knr-active-price">
+              {{ product.selected_or_first_available_variant.price | default: 7500 | money }}
+            </span>
+            <span class="knr-compare-price" id="knr-compare-price">
+              {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+                {{ product.selected_or_first_available_variant.compare_at_price | money }}
+              {%- else -%}
+                {%- if product.variants.size == 0 -%}85,00 €{%- endif -%}
+              {%- endif -%}
+            </span>
+          </div>
+          <div class="knr-unit-price" id="knr-unit-price">
+            75,00 € par 100 mL
+          </div>
+        </div>
+        
+        <!-- Formulaire et Bouton d'ajout au panier AJAX -->
+        <div class="knr-atc-wrapper">
+          <form id="knr-main-atc-form">
+            <input type="hidden" name="id" id="knr-variant-id-input" value="{{ product.selected_or_first_available_variant.id | default: 123456789 }}">
+            <button type="submit" class="knr-add-to-cart-btn" id="knr-main-submit-btn">Ajouter au panier</button>
+          </form>
+        </div>
+        
+        <!-- État du stock -->
+        <div class="knr-stock-info">
+          En stock, livraison estimée <span class="knr-bold">Mercredi 25 février</span>.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     B. ACCORDÉONS & CAROUSEL (RITUEL)
+     ========================================== -->
+<div class="knr-bottom-section">
+  <div class="knr-bottom-container">
+    
+    <!-- Deux photos d'ambiance collées à l'extrême gauche de l'écran -->
+    <div class="knr-bottom-left-photos">
+      <div class="knr-bottom-photo-wrapper">
+        <img src="{{ 'd4b7f3b211c02c30ecfa9fcc5f20aacc35a96d1e.png' | asset_url }}" 
+             onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+             alt="Visage femme" 
+             class="knr-bottom-photo-img">
+      </div>
+      <div class="knr-bottom-photo-wrapper">
+        <img src="{{ 'cce4470b82055c74b8b7b02b63293c8f54ab9986.png' | asset_url }}" 
+             onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+             alt="Flacon et roses" 
+             class="knr-bottom-photo-img">
+      </div>
+    </div>
+    
+    <!-- Fiche produit basse -->
+    <div class="knr-product-sheet-bottom">
+      
+      <!-- Accordéons (FAQ Description) -->
+      <div class="knr-accordion">
+        
+        <!-- Accordéon 1 (Ouvert par défaut) -->
+        <div class="knr-accordion-item active">
+          <button class="knr-accordion-header" type="button">
+            <span>Description</span>
+            <span class="knr-accordion-icon">
+              <svg class="knr-accordion-icon-svg" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          </button>
+          <div class="knr-accordion-content" style="display: block;">
+            Formulé à partir de 97 % d'ingrédients d'origine naturelle, ce sérum précieux active les mécanismes naturels de régénération cellulaire.
+          </div>
+        </div>
+        
+        <!-- Accordéon 2 -->
+        <div class="knr-accordion-item">
+          <button class="knr-accordion-header" type="button">
+            <span>Bienfaits</span>
+            <span class="knr-accordion-icon">
+              <svg class="knr-accordion-icon-svg" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          </button>
+          <div class="knr-accordion-content">
+            Hydratation intense, réduction visible des ridules et amélioration globale de l'élasticité de la peau.
+          </div>
+        </div>
+        
+        <!-- Accordéon 3 -->
+        <div class="knr-accordion-item">
+          <button class="knr-accordion-header" type="button">
+            <span>Ingrédients clés</span>
+            <span class="knr-accordion-icon">
+              <svg class="knr-accordion-icon-svg" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          </button>
+          <div class="knr-accordion-content">
+            Huile pure de figue de Barbarie biologique, coenzyme Q10 naturelle, et squalane d'olive végétale.
+          </div>
+        </div>
+        
+        <!-- Accordéon 4 -->
+        <div class="knr-accordion-item">
+          <button class="knr-accordion-header" type="button">
+            <span>Adapté aux peaux</span>
+            <span class="knr-accordion-icon">
+              <svg class="knr-accordion-icon-svg" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          </button>
+          <div class="knr-accordion-content">
+            Idéal pour les peaux matures, sèches, normales ou en manque d'éclat.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Rituel (Carrousel de recommandation) -->
+      <div class="knr-carousel-wrapper">
+        <div class="knr-carousel-title-row">
+          <h2>COMPLÉTEZ VOTRE RITUEL</h2>
+          <span class="knr-carousel-icon-arrow">➔</span>
+        </div>
+        
+        <!-- Slider tactile à défilement horizontal natif -->
+        <div class="knr-carousel-track">
+          
+          <!-- Produit Recommandé 1 (Centré) -->
+          <div class="knr-carousel-card">
+            <div class="knr-card-img-wrapper">
+              <img src="{{ 'Screenshot 2026-06-06 184133.png' | asset_url }}" 
+                   onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+                   alt="Huile Précieuse" 
+                   class="knr-card-img">
+              
+              <!-- Bouton d'ajout rapide AJAX -->
+              <button type="button" class="knr-quick-add-btn" data-variant-id="456789123" aria-label="Ajouter Huile Précieuse au panier">
+                <svg class="knr-plus-svg" viewBox="0 0 24 24">
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="knr-card-info">
+              <span class="knr-card-title">Huile Précieuse</span>
+              <span class="knr-card-price">00.00€</span>
+            </div>
+          </div>
+          
+          <!-- Produit Recommandé 2 (Centré) -->
+          <div class="knr-carousel-card">
+            <div class="knr-card-img-wrapper">
+              <img src="{{ 'Screenshot 2026-06-06 184133.png' | asset_url }}" 
+                   onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+                   alt="Sérum Éclat" 
+                   class="knr-card-img">
+              
+              <button type="button" class="knr-quick-add-btn" data-variant-id="456789124" aria-label="Ajouter Sérum Éclat au panier">
+                <svg class="knr-plus-svg" viewBox="0 0 24 24">
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="knr-card-info">
+              <span class="knr-card-title">Sérum Éclat</span>
+              <span class="knr-card-price">00.00€</span>
+            </div>
+          </div>
+          
+          <!-- Produit Recommandé 3 (Centré) -->
+          <div class="knr-carousel-card">
+            <div class="knr-card-img-wrapper">
+              <img src="{{ 'Screenshot 2026-06-06 184133.png' | asset_url }}" 
+                   onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+                   alt="Crème Rich" 
+                   class="knr-card-img">
+              
+              <button type="button" class="knr-quick-add-btn" data-variant-id="456789125" aria-label="Ajouter Crème Rich au panier">
+                <svg class="knr-plus-svg" viewBox="0 0 24 24">
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="knr-card-info">
+              <span class="knr-card-title">Crème Rich</span>
+              <span class="knr-card-price">00.00€</span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="knr-engagement-section">
+  <div class="knr-engagement-container">
+    
+    <!-- Colonne Gauche -->
+    <div class="knr-engagement-left">
+      <span class="knr-engagement-sub">Notre engagement pour une beauté régénérée</span>
+      <div class="knr-engagement-line"></div>
+    </div>
+
+    <!-- Colonne Droite -->
+    <div class="knr-engagement-right">
+      <p class="knr-engagement-text">
+        Fusionnant l'huile de rosier muscat, le rétinol végétal et l'extrait de cactus, notre sérum pénètre en profondeur pour stimuler le renouvellement cellulaire, atténuer les rides et redonner à la peau son éclat et sa fermeté naturels.
+      </p>
+      <span class="knr-engagement-author">Sophie M.</span>
+    </div>
+
+    <!-- Fiche produit flottante et chevauchante -->
+    <div class="knr-floating-product-card">
+      <div class="knr-float-img-wrapper">
+        <img src="{{ 'Screenshot 2026-06-06 184133.png' | asset_url }}" 
+             onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+             alt="{{ product.title }}" 
+             class="knr-float-img">
+      </div>
+      
+      <!-- Détails intérieurs de la fiche horizontale -->
+      <div class="knr-float-details">
+        <h3 class="knr-float-title">{{ product.title | default: "SÉRUM PRÉCIEUX RÉGÉNÉRANT" }}</h3>
+        
+        <div class="knr-float-sizes">
+          {%- for variant in product.variants -%}
+            <button type="button" 
+                    class="knr-float-size-btn {% if forloop.first %}active{% endif %}" 
+                    data-id="{{ variant.id }}" 
+                    data-price="{{ variant.price | money }}">
+              {{ variant.title }}
+            </button>
+          {%- else -%}
+            <!-- Fallbacks de secours locale -->
+            <button type="button" class="knr-float-size-btn active" data-id="123456789" data-price="75,00 €">15 mL</button>
+            <button type="button" class="knr-float-size-btn" data-id="987654321" data-price="250,00 €">150 mL</button>
+          {%- endfor -%}
+        </div>
+
+        <div class="knr-float-price" id="knr-float-active-price">
+          {{ product.selected_or_first_available_variant.price | default: 7500 | money }}
+        </div>
+      </div>
+
+      <!-- Formulaire AJAX rapide pour la fiche flottante -->
+      <div class="knr-float-atc-wrapper">
+        <form id="knr-float-atc-form">
+          <input type="hidden" name="id" id="knr-float-variant-id-input" value="{{ product.selected_or_first_available_variant.id | default: 123456789 }}">
+          <button type="submit" class="knr-float-atc-btn" id="knr-float-submit-btn">Ajouter au panier</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="knr-how-to-use-section">
+  <div class="knr-how-to-use-container">
+    
+    <!-- Titre de la section -->
+    <h2 class="knr-how-to-use-title">How to use</h2>
+
+    <!-- Grille à 3 étapes -->
+    <div class="knr-how-to-use-grid">
+      
+      <!-- Étape 01 -->
+      <div class="knr-how-to-use-col">
+        <div class="knr-step-img-wrapper">
+          <img src="{{ 'b3c41b28239a6e1484b6d832c24190882ab2c03.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="Geste beauté flacon" 
+               class="knr-step-img">
+        </div>
+        <div class="knr-step-info">
+          <span class="knr-step-number">01</span>
+          <h3 class="knr-step-title">Découvrir</h3>
+          <p class="knr-step-desc">
+            Concentré de pureté active. Huile végétale aux propriétés anti-oxydantes puissantes pour un éclat retrouvé.
+          </p>
+        </div>
+      </div>
+
+      <!-- Étape 02 -->
+      <div class="knr-how-to-use-col">
+        <div class="knr-step-img-wrapper">
+          <img src="{{ 'd4b7f3b211c02c30ecfa9fcc5f20aacc35a96d1e.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="Visage femme" 
+               class="knr-step-img">
+        </div>
+        <div class="knr-step-info">
+          <span class="knr-step-number">02</span>
+          <h3 class="knr-step-title">Découvrir</h3>
+          <p class="knr-step-desc">
+            Éclat et uniformité retrouvés. Cible les taches et les irrégularités de grain de peau.
+          </p>
+        </div>
+      </div>
+
+      <!-- Étape 03 -->
+      <div class="knr-how-to-use-col">
+        <div class="knr-step-img-wrapper">
+          <img src="{{ 'a90b67da1b70d5da6391fac25ef72a00c2465f75.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="Geste application sérum" 
+               class="knr-step-img">
+        </div>
+        <div class="knr-step-info">
+          <span class="knr-step-number">03</span>
+          <h3 class="knr-step-title">Découvrir</h3>
+          <p class="knr-step-desc">
+            Fermeté et nutrition intense. Répare la barrière cutanée et lisse les contours du visage.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="knr-how-to-progress-wrapper">
+      <div class="knr-how-to-progress-bar" id="howToProgress"></div>
+    </div>
+
+  </div>
+ 
+</div>
+
+
+<div class="knr-reviews-section">
+  
+  <!-- En-tête de section -->
+  <div class="knr-reviews-container">
+    <div class="knr-reviews-header">
+      <h2 class="knr-reviews-title">Ce que disent nos clientes</h2>
+      <p class="knr-reviews-sub">
+        Des transformations visibles dès 4 semaines. Nos clientes témoignent d'une peau visiblement régénérée, plus ferme et lumineuse.
+      </p>
+    </div>
+  </div>
+
+  <!-- Slider de comparaison Avant/Après -->
+  <div class="knr-comparison-wrapper">
+    <div class="knr-comparison-slider">
+      
+      <!-- Arrière-plan (Image APRÈS) -->
+      <div class="knr-after-img-wrapper">
+        <img src="{{ 'after_image.png' | asset_url }}" 
+             onerror="this.onerror=null; this.src='{{ 'upscale_image_2.png' | asset_url }}';" 
+             alt="Après utilisation" 
+             class="knr-after-img">
+        <span class="knr-slider-label knr-label-after">AFTER</span>
+      </div>
+
+      <!-- Premier plan (Image AVANT) -->
+      <div class="knr-before-img-wrapper" id="knr-before-wrapper">
+        <img src="{{ 'before_image.png' | asset_url }}" 
+             onerror="this.onerror=null; this.src='{{ 'upscale_image_2.png' | asset_url }}';" 
+             alt="Avant utilisation" 
+             class="knr-before-img">
+        <span class="knr-slider-label knr-label-before">BEFORE</span>
+      </div>
+
+      <!-- Barre de séparation de glissement -->
+      <div class="knr-slider-handle" id="knr-slider-handle">
+        <div class="knr-handle-circle">|||</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Témoignages du bas -->
+  <div class="knr-testimonial-container">
+    <div class="knr-testimonial-stars">★★★★★</div>
+    <div class="knr-testimonial-author" id="knr-author-target">Clara T.</div>
+    <p class="knr-testimonial-quote" id="knr-quote-target">
+      J'utilise ce sérum depuis trois mois et la différence est saisissante. Mes rides d'expression se sont considérablement atténuées et mon teint a retrouvé une luminosité que je n'avais plus depuis des années. Une texture soyeuse qui pénètre instantanément. Je ne peux plus m'en passer.
+    </p>
+
+    <!-- Boutons de navigation minimalistes -->
+    <div class="knr-testimonial-nav">
+      <button type="button" class="knr-nav-arrow" id="knr-btn-prev" aria-label="Avis précédent"><</button>
+      <button type="button" class="knr-nav-arrow" id="knr-btn-next" aria-label="Avis suivant">></button>
+    </div>
+  </div>
+
+</div>
+
+<div class="knr-product-faq-section">
+  <div class="knr-product-faq-container">
+    
+    <!-- Titre de la section -->
+    <h2 class="knr-product-faq-title">Questions fréquentes</h2>
+
+    <!-- Liste des accordéons FAQ -->
+    <div class="knr-faq-list">
+      
+      <!-- Question 1 (Ouverte par défaut) -->
+      <div class="knr-faq-item active">
+        <button class="knr-faq-header" type="button">
+          <span>Comment utiliser ?</span>
+          <span class="knr-faq-icon">
+            <svg class="knr-faq-icon-svg" viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </button>
+        <div class="knr-faq-content" style="display: block;">
+          Appliquez 3 à 5 gouttes le soir sur visage et cou préalablement nettoyés. Massez délicatement en mouvements ascendants jusqu'à absorption complète. Peut s'utiliser seul ou sous votre crème habituelle.
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="knr-faq-item">
+        <button class="knr-faq-header" type="button">
+          <span>Quand voir les effets ?</span>
+          <span class="knr-faq-icon">
+            <svg class="knr-faq-icon-svg" viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </button>
+        <div class="knr-faq-content">
+          Les premiers résultats sur l'éclat de la peau sont généralement visibles dès les premières semaines d'application quotidienne. Les effets régénérants en profondeur s'installent progressivement sur 4 à 8 semaines de cure.
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="knr-faq-item">
+        <button class="knr-faq-header" type="button">
+          <span>Convient-il à tous ?</span>
+          <span class="knr-faq-icon">
+            <svg class="knr-faq-icon-svg" viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </button>
+        <div class="knr-faq-content">
+          Oui, sa formule naturelle et ultra-fine est spécialement développée pour convenir à tous les types de peaux, y compris les peaux sensibles, mixtes ou sujettes aux imperfections.
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="knr-faq-item">
+        <button class="knr-faq-header" type="button">
+          <span>Est-il naturel ?</span>
+          <span class="knr-faq-icon">
+            <svg class="knr-faq-icon-svg" viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </button>
+        <div class="knr-faq-content">
+          Absolument. Ce sérum précieux est formulé à partir de 97 % d'ingrédients d'origine naturelle, sans silicones, sans huiles minérales ni parfums de synthèse.
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="knr-faq-item">
+        <button class="knr-faq-header" type="button">
+          <span>Peut-on l'associer ?</span>
+          <span class="knr-faq-icon">
+            <svg class="knr-faq-icon-svg" viewBox="0 0 24 24">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </button>
+        <div class="knr-faq-content">
+          Oui, vous pouvez parfaitement l'associer à votre rituel habituel. Il s'applique idéalement après le nettoyage et avant votre crème hydratante ou votre huile de soin protectrice.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="knr-reviews-dashboard-section">
+  <div class="knr-reviews-dashboard-container">
+    
+    <!-- Titre principal -->
+    <h2 class="knr-dashboard-title">Avis clients</h2>
+
+    <!-- Tableau de bord synthétique -->
+    <div class="knr-reviews-summary-grid">
+      
+      <!-- Colonne 1 : Note moyenne -->
+      <div class="knr-summary-left">
+        <div class="knr-summary-stars-row">
+          <span class="knr-summary-stars">★★★★★</span>
+          <span>4.7 sur 5</span>
+        </div>
+        <span class="knr-summary-count-text" id="knr-total-reviews-count">Basé sur 200 avis</span>
+      </div>
+
+      <!-- Colonne 2 : Répartition des notes -->
+      <div class="knr-summary-center">
+        <!-- 5 Étoiles -->
+        <div class="knr-progress-row">
+          <span class="knr-progress-stars">★★★★★</span>
+          <div class="knr-progress-bar">
+            <div class="knr-progress-fill" style="width: 70%;"></div>
+          </div>
+          <span class="knr-progress-count">32</span>
+        </div>
+        <!-- 4 Étoiles -->
+        <div class="knr-progress-row">
+          <span class="knr-progress-stars">★★★★☆</span>
+          <div class="knr-progress-bar">
+            <div class="knr-progress-fill" style="width: 25%;"></div>
+          </div>
+          <span class="knr-progress-count">10</span>
+        </div>
+        <!-- 3 Étoiles -->
+        <div class="knr-progress-row">
+          <span class="knr-progress-stars">★★★☆☆</span>
+          <div class="knr-progress-bar">
+            <div class="knr-progress-fill" style="width: 12%;"></div>
+          </div>
+          <span class="knr-progress-count">5</span>
+        </div>
+        <!-- 2 Étoiles -->
+        <div class="knr-progress-row">
+          <span class="knr-progress-stars">★★☆☆☆</span>
+          <div class="knr-progress-bar">
+            <div class="knr-progress-fill" style="width: 15%;"></div>
+          </div>
+          <span class="knr-progress-count">6</span>
+        </div>
+        <!-- 1 Étoiles -->
+        <div class="knr-progress-row">
+          <span class="knr-progress-stars">★☆☆☆☆</span>
+          <div class="knr-progress-bar">
+            <div class="knr-progress-fill" style="width: 3%;"></div>
+          </div>
+          <span class="knr-progress-count">1</span>
+        </div>
+      </div>
+
+      <!-- Colonne 3 : Actions -->
+      <div class="knr-summary-right">
+        <button type="button" class="knr-action-btn-black" id="knr-write-review-btn">Écrire un avis</button>
+        <button type="button" class="knr-action-btn-outline" onclick="alert('Formulaire de question à venir')">Poser une question</button>
+      </div>
+
+    </div>
+
+    <!-- Barre de Filtrage -->
+    <div class="knr-filter-bar">
+      <span class="knr-filter-icon">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M4 6h16M6 12h12M10 18h4"/>
+        </svg>
+      </span>
+      <span>Filtrer</span>
+    </div>
+
+    <!-- Liste des fiches avis clients -->
+    <div class="knr-reviews-list" id="knr-reviews-container-list">
+      
+      <!-- Avis 1 -->
+      <div class="knr-review-card">
+        <div class="knr-review-top">
+          <div class="knr-review-stars">★★★★★</div>
+          <span class="knr-review-date">09/02/26</span>
+        </div>
+        <div class="knr-review-author-row">
+          <span>Mathilde S</span>
+          <span class="knr-verified-badge">VÉRIFIÉ</span>
+        </div>
+        <h4 class="knr-review-title">Après usage d'1 mois</h4>
+        <p class="knr-review-text">
+          Maison Célestine est une marque de soins anti-âge haut de gamme formulée autour d'actifs rares et certifiés biologiques, guidée par une expertise médicale et un rituel simple, précis et efficace.
+        </p>
+      </div>
+
+      <!-- Avis 2 -->
+      <div class="knr-review-card">
+        <div class="knr-review-top">
+          <div class="knr-review-stars">★★★★★</div>
+          <span class="knr-review-date">09/02/26</span>
+        </div>
+        <div class="knr-review-author-row">
+          <span>Mathilde S</span>
+          <span class="knr-verified-badge">VÉRIFIÉ</span>
+        </div>
+        <h4 class="knr-review-title">Après usage d'1 mois</h4>
+        <p class="knr-review-text">
+          Maison Célestine est une marque de soins anti-âge haut de gamme formulée autour d'actifs rares et certifiés biologiques, guidée par une expertise médicale et un rituel simple, précis et efficace.
+        </p>
+      </div>
+
+      <!-- Avis 3 -->
+      <div class="knr-review-card">
+        <div class="knr-review-top">
+          <div class="knr-review-stars">★★★★★</div>
+          <span class="knr-review-date">09/02/26</span>
+        </div>
+        <div class="knr-review-author-row">
+          <span>Mathilde S</span>
+          <span class="knr-verified-badge">VÉRIFIÉ</span>
+        </div>
+        <h4 class="knr-review-title">Après usage d'1 mois</h4>
+        <p class="knr-review-text">
+          Maison Célestine est une marque de soins anti-âge haut de gamme formulée autour d'actifs rares et certifiés biologiques, guidée par une expertise médicale et un rituel simple, précis et efficace.
+        </p>
+      </div>
+
+      <!-- Avis Masqué 4 (Révélé au clic de Charger Plus) -->
+      <div class="knr-review-card knr-hidden">
+        <div class="knr-review-top">
+          <div class="knr-review-stars">★★★★★</div>
+          <span class="knr-review-date">05/02/26</span>
+        </div>
+        <div class="knr-review-author-row">
+          <span>Hélène R</span>
+          <span class="knr-verified-badge">VÉRIFIÉ</span>
+        </div>
+        <h4 class="knr-review-title">Texture divine et fini soyeux</h4>
+        <p class="knr-review-text">
+          Un produit hautement qualitatif. L'absorption est immédiate et les ridules de déshydratation s'estompent visiblement dès les premiers jours. Je recommande vivement pour les peaux sèches.
+        </p>
+      </div>
+
+      <!-- Avis Masqué 5 (Révélé au clic de Charger Plus) -->
+      <div class="knr-review-card knr-hidden">
+        <div class="knr-review-top">
+          <div class="knr-review-stars">★★★★★</div>
+          <span class="knr-review-date">02/02/26</span>
+        </div>
+        <div class="knr-review-author-row">
+          <span>Clarisse D</span>
+          <span class="knr-verified-badge">VÉRIFIÉ</span>
+        </div>
+        <h4 class="knr-review-title">Ma routine indispensable !</h4>
+        <p class="knr-review-text">
+          Mon teint a retrouvé une clarté et un éclat incomparables. Associé à ma crème de nuit, ce sérum fait des merveilles sur mon grain de peau. C'est un 10/10.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bouton Charger Plus -->
+    <div class="knr-load-more-wrapper">
+      <button type="button" class="knr-load-more-btn" id="knr-load-more-trigger">Charger plus</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================
+     C. FENÊTRE MODALE D'ECRITURE D'AVIS CLIENT
+     ========================================== -->
+<div class="knr-modal-overlay" id="knr-write-review-modal">
+  <div class="knr-modal-card">
+    <button class="knr-modal-close" id="knr-modal-close-trigger">✕</button>
+    <h3 class="knr-modal-title">Écrire un avis</h3>
+    
+    <form id="knr-submit-review-form">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        
+        <!-- Sélection de la note -->
+        <div class="knr-form-group">
+          <label>Votre note (Étoiles)</label>
+          <select class="knr-form-input" id="knr-form-stars" style="padding: 0 8px;">
+            <option value="★★★★★">★★★★★ (5/5)</option>
+            <option value="★★★★☆">★★★★☆ (4/5)</option>
+            <option value="★★★☆☆">★★★☆☆ (3/5)</option>
+            <option value="★★☆☆☆">★★☆☆☆ (2/5)</option>
+            <option value="★☆☆☆☆">★☆☆☆☆ (1/5)</option>
+          </select>
+        </div>
+
+        <!-- Nom complet -->
+        <div class="knr-form-group">
+          <label>Votre prénom et initiale de nom</label>
+          <input type="text" class="knr-form-input" id="knr-form-name" placeholder="Ex: Mathilde S" required>
+        </div>
+
+        <!-- Titre de l'avis -->
+        <div class="knr-form-group">
+          <label>Titre de votre avis</label>
+          <input type="text" class="knr-form-input" id="knr-form-title" placeholder="Ex: Après usage d'1 mois" required>
+        </div>
+
+        <!-- Commentaire -->
+        <div class="knr-form-group">
+          <label>Votre commentaire</label>
+          <textarea class="knr-form-textarea" id="knr-form-comment" placeholder="Partagez votre expérience avec notre sérum..." required></textarea>
+        </div>
+
+        <button type="submit" class="knr-submit-form-btn">Soumettre l'avis</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="knr-latest-news-section">
+  <div class="knr-latest-news-container">
+    
+    <!-- En-tête -->
+    <div class="knr-news-header-row">
+      <h2 class="knr-news-main-title">Latest news</h2>
+      <a href="/blogs/news" class="knr-news-all-link">Voir tous les articles</a>
+    </div>
+
+    <!-- Grille à 4 colonnes -->
+    <div class="knr-news-grid">
+      
+      <!-- Colonne 1 -->
+      <div class="knr-news-col">
+        <div class="knr-news-img-wrapper">
+          <img src="{{ '11db250722d728bf5a034cdba54ed0847b8f1da5.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="Origine de la marque" 
+               class="knr-news-img">
+        </div>
+        <div class="knr-news-meta">
+          <span class="knr-news-tag">L'origine</span>
+          <div class="knr-news-line"></div>
+        </div>
+        <h3 class="knr-news-title">Fondée en 2012 dans les Alpes</h3>
+        <p class="knr-news-desc">
+          Maison Célestine est née de la passion d'une botaniste pour les plantes alpines et leurs propriétés régénérantes exceptionnelles.
+        </p>
+      </div>
+
+      <!-- Colonne 2 -->
+      <div class="knr-news-col">
+        <div class="knr-news-img-wrapper">
+          <img src="{{ 'e3553e73e3279eaf2095f469891b489e7bfe6394.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="La formule" 
+               class="knr-news-img">
+        </div>
+        <div class="knr-news-meta">
+          <span class="knr-news-tag">La formule</span>
+          <div class="knr-news-line"></div>
+        </div>
+        <h3 class="knr-news-title">12 ingrédients actifs sélectionnés</h3>
+        <p class="knr-news-desc">
+          Chaque ingrédient est sourcé chez des producteurs engagés : huile de rosier muscat, rétinol végétal, extrait de cactus Cactaceae.
+        </p>
+      </div>
+
+      <!-- Colonne 3 -->
+      <div class="knr-news-col">
+        <div class="knr-news-img-wrapper">
+          <img src="{{ 'd4b7f3b211c02c30ecfa9fcc5f20aacc35a96d1e.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="L'expertise laboratoire" 
+               class="knr-news-img">
+        </div>
+        <div class="knr-news-meta">
+          <span class="knr-news-tag">L'expertise</span>
+          <div class="knr-news-line"></div>
+        </div>
+        <h3 class="knr-news-title">15 ans de recherche en lab</h3>
+        <p class="knr-news-desc">
+          Notre laboratoire indépendant teste chaque formule sur des panels de peaux diverses, garantissant efficacité et tolérance.
+        </p>
+      </div>
+
+      <!-- Colonne 4 -->
+      <div class="knr-news-col">
+        <div class="knr-news-img-wrapper">
+          <img src="{{ 'ba9711f8e3188ac9a1a699bed15347ddc4f5dabe.png' | asset_url }}" 
+               onerror="this.onerror=null; this.src='{{ 'upscale_image.png' | asset_url }}';" 
+               alt="Notre engagement" 
+               class="knr-news-img">
+        </div>
+        <div class="knr-news-meta">
+          <span class="knr-news-tag">L'engagement</span>
+          <div class="knr-news-line"></div>
+        </div>
+        <h3 class="knr-news-title">97 % naturel certifié</h3>
+        <p class="knr-news-desc">
+          Emballages recyclables, formules biodégradables, compensation carbone intégrale. Beauté responsable, du champ au flacon.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="knr-news-progress-wrapper">
+  <div class="knr-news-progress-bar" id="newsProgressBar"></div>
+</div>
+
+  </div>
+</div>
+
+<div class="knr-newsletter-section">
+  <div class="knr-newsletter-container">
+    
+    <!-- Colonne Gauche : Image -->
+    <div class="knr-newsletter-left-media">
+      <img src="{{ '9859136db17d131b50492fe1db2318b7b1a8868d.png' | asset_url }}" 
+           onerror="this.onerror=null; this.src='{{ 'upscale_image_2.png' | asset_url }}';" 
+           alt="Gamme produits flacons" 
+           class="knr-newsletter-img">
+    </div>
+
+    <!-- Colonne Droite : Formulaire d'inscription -->
+    <div class="knr-newsletter-right-content">
+      <p class="knr-newsletter-text">
+        L'alliance de la science botanique et du luxe naturel pour une peau visiblement rajeunie en 4 semaines.
+      </p>
+
+      <!-- Formulaire natif Shopify Customer -->
+      {%- form 'customer', class: 'knr-newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        
+        <div class="knr-newsletter-form-row">
+          <input
+            id="NewsletterForm--{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="knr-newsletter-input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            placeholder="E-mail"
+            required
+          >
+          <button type="submit" class="knr-newsletter-submit-btn" name="commit" id="Subscribe">
+            S'inscrire
+          </button>
+        </div>
+
+        {%- if form.posted_successfully? -%}
+          <p class="knr-newsletter-success">Merci pour votre inscription !</p>
+        {%- endif -%}
+      {%- endform -%}
+
+      <!-- Petite note de réassurance sous le formulaire -->
+      <p class="knr-newsletter-desc">
+        Formule brevetée, testée dermatologiquement, 97 % d'ingrédients d'origine naturelle.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<div class="knr-reassurance-section">
+  <div class="knr-reassurance-container">
+    
+    <!-- Colonne 1 : Livraison Offerte -->
+    <div class="knr-reassurance-col">
+      <h3 class="knr-reassurance-title">Livraison offerte</h3>
+      <p class="knr-reassurance-desc">
+        Livraison offerte<br>dès 60 € d'achat<br>en France métropolitaine.
+      </p>
+    </div>
+
+    <!-- Colonne 2 : Retours Gratuits -->
+    <div class="knr-reassurance-col">
+      <h3 class="knr-reassurance-title">Retours gratuits</h3>
+      <p class="knr-reassurance-desc">
+        Retours acceptés<br>jusqu'à 30 jours<br>après réception.
+      </p>
+    </div>
+
+    <!-- Colonne 3 : Paiement Sécurisé -->
+    <div class="knr-reassurance-col">
+      <h3 class="knr-reassurance-title">Paiement sécurisé</h3>
+      <p class="knr-reassurance-desc">
+        Paiement 100 % sécurisé<br>par carte bancaire,<br>PayPal ou virement.
+      </p>
+    </div>
+
+    <!-- Colonne 4 : Service Client -->
+    <div class="knr-reassurance-col">
+      <h3 class="knr-reassurance-title">Service client</h3>
+      <p class="knr-reassurance-desc">
+        Du lundi au vendredi<br>de 9h à 18h par email<br>et téléphone.
+      </p>
+    </div>
+
+  </div>
+  <!-- À placer juste avant la fin de knr-reassurance-container -->
+<div class="knr-reassurance-progress">
+  <div class="reassurance-dot active" data-index="0"></div>
+  <div class="reassurance-dot" data-index="1"></div>
+  <div class="reassurance-dot" data-index="2"></div>
+  <div class="reassurance-dot" data-index="3"></div>
+</div>
+</div>
+
+
+
+<style>
+  /* ---------------------------------------------------------
+     1. STRUCTURE DU PIED DE PAGE ET GRILLE GLOBALE
+     --------------------------------------------------------- */
+  .section-product-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .knr-footer-section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    background-color: #FCFBF9; /* Fond crème clair conforme */
+    box-sizing: border-box;
+    padding: 80px 0 40px 0;
+    border-top: 1px solid #E0DDD6;
+  }
+
+  .knr-footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px; /* Espacement vertical entre les sections du footer */
+    box-sizing: border-box;
+  }
+
+  /* Grille supérieure : Les 4 colonnes de liens */
+  .knr-footer-top-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .knr-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .knr-footer-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .knr-footer-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .knr-footer-link:hover {
+    opacity: 0.6;
+  }
+
+  .knr-about-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: -2%;
+    color: #000000;
+    margin: 0;
+  }
+
+  /* Certification Cosmos Bio */
+  .knr-cert-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    margin-top: 16px;
+    border-bottom: 0.8px solid #E0DDD6;
+    padding-bottom: 16px;
+  }
+
+  .knr-cert-logo {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+
+  .knr-cert-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #000000;
+    margin: 0;
+  }
+
+  .knr-cert-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 0.8px solid #000000;
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: opacity 0.2s;
+    margin-top: 12px;
+  }
+
+  .knr-cert-link:hover {
+    opacity: 0.6;
+  }
+
+  /* ---------------------------------------------------------
+     2. ZONE INTERMÉDIAIRE : GIGANTESQUE LOGO "MAISON CÉLESTINE"
+     --------------------------------------------------------- */
+  .knr-footer-brand-row {
+    width: 100%;
+    border-top: 1px solid #E0DDD6;
+    padding-top: 48px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Titre de marque géant : Agrandi et centré au milieu de la grille */
+  .knr-footer-brand-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(80px, 12.5vw, 180px); /* Agrandi pour occuper les 1440px de largeur */
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+    color: #000000;
+    margin: 0;
+    text-align: center;                    /* Parfaitement centré au milieu de l'écran */
+    width: 100%;
+  }
+
+  /* ---------------------------------------------------------
+     3. BARRE DE COPYRIGHT ET DE RÉSEAUX (SUB-FOOTER)
+     --------------------------------------------------------- */
+  .knr-footer-sub-bar {
+    width: 100%;
+    border-top: 1px solid #E0DDD6;
+    padding-top: 24px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  /* Sélecteurs Pays & Langues */
+  .knr-footer-selectors-group {
+    display: flex;
+    gap: 24px;
+  }
+
+  .knr-footer-selector {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .knr-selector-chevron {
+    width: 8px;
+    height: 8px;
+    color: #000000;
+  }
+
+  /* Copyright */
+  .knr-footer-copyright {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px; /* Conforme Figma */
+    line-height: 20px; /* Conforme Figma */
+    letter-spacing: -2%; /* Conforme Figma */
+    color: #000000;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* Icônes de réseaux sociaux */
+  .knr-footer-socials {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .knr-social-icon-link {
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .knr-social-icon-link:hover {
+    opacity: 0.6;
+  }
+
+  /* ---------------------------------------------------------
+     4. RESPONSIVE DESIGN (MOBILE / TABLETTE)
+     --------------------------------------------------------- */
+  @media (max-width: 991px) {
+    .knr-footer-section {
+      height: auto;
+      padding: 40px 20px;
+    }
+    .knr-footer-container {
+      padding: 0;
+      gap: 32px;
+    }
+    .knr-footer-top-row {
+      grid-template-columns: repeat(2, 1fr); /* 2x2 sur tablette */
+      gap: 40px 24px;
+    }
+    .knr-footer-brand-title {
+      letter-spacing: -1.5px;
+    }
+    .knr-footer-sub-bar {
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+    }
+    .knr-footer-selectors-group {
+      justify-content: center;
+    }
+  }
+
+  /* --- ACCORDÉON FOOTER MOBILE UNIQUEMENT --- */
+@media (max-width: 991px) {
+  /* On empile les colonnes et on enlève les gaps pour l'effet FAQ */
+  .knr-footer-top-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  .knr-footer-col {
+    border-bottom: 1px solid #E0DDD6;
+    padding: 0 !important;
+  }
+
+  /* Style du titre cliquable */
+  .knr-footer-title {
+    padding: 20px 0 !important;
+    margin: 0 !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Ajout du chevron via CSS */
+  .knr-footer-title::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid #000;
+    border-bottom: 1.5px solid #000;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+    margin-right: 5px;
+  }
+
+  /* Rotation du chevron quand c'est ouvert */
+  .knr-footer-col.active .knr-footer-title::after {
+    transform: rotate(-135deg);
+  }
+
+  /* On cache la liste par défaut sur mobile */
+  .knr-footer-links-list {
+    display: none; /* Masqué */
+    padding-bottom: 20px !important;
+    gap: 15px !important;
+  }
+
+  /* On affiche si la colonne a la classe .active */
+  .knr-footer-col.active .knr-footer-links-list {
+    display: flex !important;
+  }
+
+  /* On laisse la section "À propos" (dernière colonne) toujours visible ou on l'inclut selon ton choix */
+  /* Si tu veux aussi la cacher, ne rien changer. Si tu veux qu'elle reste fixe : */
+  .knr-footer-col:last-child .knr-footer-links-list,
+  .knr-footer-col:last-child .knr-about-text,
+  .knr-footer-col:last-child .knr-cert-block {
+     display: block !important; 
+     padding-top: 10px;
+  }
+  .knr-footer-brand-title {
+  white-space: nowrap !important;
+  font-size: clamp(48px, 9.8vw, 200px) !important; /* Ajuste la taille pour que ça ne dépasse pas sur mobile */
+}
+}
+
+  @media (max-width: 575px) {
+    .knr-footer-top-row {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+      gap: 32px;
+    }
+  }
+</style>
+
+<div class="knr-footer-section">
+  <div class="knr-footer-container">
+    
+    <!-- 1. GRILLE SUPÉRIEURE : LES LIENS -->
+    <div class="knr-footer-top-row">
+      <!-- Colonne 1 : Découvrir -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">Découvrir</h3>
+        <div class="knr-footer-links-list">
+          <a href="/collections/all" class="knr-footer-link">Acheter</a>
+          <a href="/pages/notre-histoire" class="knr-footer-link">Notre histoire</a>
+          <a href="/pages/la-science" class="knr-footer-link">Science</a>
+          <a href="/pages/presse" class="knr-footer-link">Presse</a>
+          <a href="/pages/nos-adresses" class="knr-footer-link">Où nous trouver</a>
+        </div>
+      </div>
+
+      <!-- Colonne 2 : Service client -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">Service client</h3>
+        <div class="knr-footer-links-list">
+          <a href="/account" class="knr-footer-link">Mon compte</a>
+          <a href="/pages/suivre-mon-colis" class="knr-footer-link">Suivre mon colis</a>
+          <a href="/pages/livraison-retour" class="knr-footer-link">Livraison & retour</a>
+          <a href="/pages/faqs" class="knr-footer-link">FAQs</a>
+          <a href="/pages/nous-contacter" class="knr-footer-link">Nous contacter</a>
+        </div>
+      </div>
+
+      <!-- Colonne 3 : Légal & Transparence -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">Légal & Transparence</h3>
+        <div class="knr-footer-links-list">
+          <a href="/pages/conditions-generales-de-vente" class="knr-footer-link">Conditions générales de vente</a>
+          <a href="/pages/mentions-legales" class="knr-footer-link">Mentions légales</a>
+          <a href="/pages/politique-de-cookies" class="knr-footer-link">Paramètre des cookies</a>
+          <a href="/pages/accessibilite" class="knr-footer-link">Accessibilité</a>
+        </div>
+      </div>
+
+      <!-- Colonne 4 : À propos -->
+      <div class="knr-footer-col">
+        <h3 class="knr-footer-title">À propos de Maison Célestine</h3>
+        <p class="knr-about-text">
+          Maison Célestine est une marque de soins anti-âge haut de gamme formulée autour d'actifs rares et certifiés biologiques, guidée par une expertise médicale et un rituel simple, précis et efficace.
+        </p>
+
+        <div class="knr-cert-block">
+          <img src="{{ 'Calque_1.png' | asset_url }}" 
+               onerror="this.style.display='none';" 
+               alt="Cosmétique Bio - Cosmos Organic" 
+               class="knr-cert-logo">
+          <p class="knr-cert-text">Certifié COSMOS ORGANIC par ECOCERT Greenlife</p>
+        </div>
+
+        <a href="/pages/certifications" class="knr-cert-link">Voir le certificat</a>
+      </div>
+    </div>
+
+    <!-- 2. ZONE INTERMÉDIAIRE : GIGANTESQUE BRANDING TEXT -->
+    <div class="knr-footer-brand-row">
+      <div class="knr-footer-brand-title">maison célestine</div>
+    </div>
+
+    <!-- 3. BARRE INFÉRIEURE : COPYRIGHT, SELECTEURS & RESEAUX -->
+    <div class="knr-footer-sub-bar">
+      
+      <!-- Sélecteurs Langues et Devises -->
+      <div class="knr-footer-selectors-group">
+        <div class="knr-footer-selector" onclick="alert('Choix de devise à venir')">
+          <span>France (€)</span>
+          <svg class="knr-selector-chevron" viewBox="0 0 24 24" width="8" height="8">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="knr-footer-selector" onclick="alert('Choix de langue à venir')">
+          <span>Français</span>
+          <svg class="knr-selector-chevron" viewBox="0 0 24 24" width="8" height="8">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Copyright conforme Figma -->
+      <p class="knr-footer-copyright">
+        © 2026 Maison Célestine. Tous droits réservés.
+      </p>
+
+      <!-- Icônes des réseaux sociaux minimalistes SVG -->
+      <div class="knr-footer-socials">
+        <!-- Facebook -->
+        <a href="https://facebook.com" class="knr-social-icon-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.51-.81 8-4.82 8-9.95z"/>
+          </svg>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://instagram.com" class="knr-social-icon-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://tiktok.com" class="knr-social-icon-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74-.22-.2-.4-.43-.59-.65v7.54c-.11 1.79-.83 3.61-2.22 4.75-1.57 1.35-3.84 1.83-5.83 1.25-2.61-.7-4.48-3.23-4.44-5.96.03-2.9 2.3-5.46 5.17-5.71.69-.07 1.39-.02 2.07.13v4.11c-.58-.19-1.22-.24-1.82-.12-1.24.22-2.2 1.34-2.23 2.59-.04 1.59 1.34 2.97 2.93 2.82 1.48-.12 2.58-1.47 2.47-2.94V.02z"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com" class="knr-social-icon-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Scripts interactifs locaux -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    /* 1. COMPORTEMENT DYNAMIQUE DU BOUTON "CHARGER PLUS" */
+    const loadMoreBtn = document.getElementById('knr-load-more-trigger');
+    const hiddenCards = document.querySelectorAll('.knr-review-card.knr-hidden');
+
+    if (loadMoreBtn && hiddenCards.length > 0) {
+      loadMoreBtn.addEventListener('click', () => {
+        hiddenCards.forEach(card => {
+          card.style.display = 'flex';
+          // Petite temporisation pour animer l'apparition
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+            card.classList.remove('knr-hidden');
+          }, 50);
+        });
+        // Masque le bouton Charger Plus une fois que tout est révélé
+        loadMoreBtn.style.display = 'none';
+      });
+    }
+
+    /* 2. GESTION DE LA FENÊTRE MODALE D'AVIS */
+    const modal = document.getElementById('knr-write-review-modal');
+    const openBtn = document.getElementById('knr-write-review-btn');
+    const closeBtn = document.getElementById('knr-modal-close-trigger');
+
+    if (modal && openBtn && closeBtn) {
+      openBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      // Fermeture au clic sur le fond sombre de la modale
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    /* 3. LOGIQUE D'AJOUT DYNAMIQUE EN TEMPS RÉEL DU NOUVEL AVIS CLIENT */
+    const form = document.getElementById('knr-submit-review-form');
+    const reviewsListContainer = document.getElementById('knr-reviews-container-list');
+    const totalCountEl = document.getElementById('knr-total-reviews-count');
+
+    if (form && reviewsListContainer) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Récupération des valeurs du formulaire
+        const selectedStars = document.getElementById('knr-form-stars').value;
+        const authorName = document.getElementById('knr-form-name').value;
+        const reviewTitle = document.getElementById('knr-form-title').value;
+        const reviewText = document.getElementById('knr-form-comment').value;
+
+        // Génère la date d'aujourd'hui au format JJ/MM/AA
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yy = String(today.getFullYear()).slice(-2);
+        const formattedDate = `${dd}/${mm}/${yy}`;
+
+        // Construction du nouvel avis au format HTML conforme
+        const newCard = document.createElement('div');
+        newCard.className = 'knr-review-card';
+        newCard.style.opacity = '0';
+        newCard.style.transform = 'translateY(-10px)';
+
+        newCard.innerHTML = `
+          <div class="knr-review-top">
+            <div class="knr-review-stars">${selectedStars}</div>
+            <span class="knr-review-date">${formattedDate}</span>
+          </div>
+          <div class="knr-review-author-row">
+            <span>${authorName}</span>
+            <span class="knr-verified-badge">VÉRIFIÉ</span>
+          </div>
+          <h4 class="knr-review-title">${reviewTitle}</h4>
+          <p class="knr-review-text">${reviewText}</p>
+        `;
+
+        // Insère dynamiquement le nouvel avis tout en haut de la liste
+        reviewsListContainer.insertBefore(newCard, reviewsListContainer.firstChild);
+
+        // Transition d'apparition fluide
+        setTimeout(() => {
+          newCard.style.transition = 'all 0.4s ease';
+          newCard.style.opacity = '1';
+          newCard.style.transform = 'translateY(0)';
+        }, 50);
+
+        // Ferme la modale et réinitialise le formulaire
+        modal.style.display = 'none';
+        form.reset();
+
+        // Met à jour incrémentalement le nombre d'avis total affiché
+        if (totalCountEl) {
+          totalCountEl.textContent = "Basé sur 201 avis";
+        }
+      });
+    }
+
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    /* LOGIQUE DES ACCORDÉONS FAQ UNIQUE (N'interfère pas avec les autres FAQ) */
+    const faqHeaders = document.querySelectorAll('.knr-faq-header');
+
+    faqHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const currentItem = header.parentElement;
+        const isActive = currentItem.classList.contains('active');
+
+        // Fermer tous les autres accordéons
+        document.querySelectorAll('.knr-faq-item').forEach(item => {
+          item.classList.remove('active');
+          item.querySelector('.knr-faq-content').style.display = 'none';
+        });
+
+        // Ouvrir l'accordéon sélectionné s'il était fermé
+        if (!isActive) {
+          currentItem.classList.add('active');
+          currentItem.querySelector('.knr-faq-content').style.display = 'block';
+        }
+      });
+    });
+  });
+</script>
+
+<!-- Scripts interactifs locaux -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    /* 1. LOGIQUE COMPARAISON INTERACTIVE AVANT / APRES */
+    const slider = document.querySelector('.knr-comparison-slider');
+    const beforeWrapper = document.getElementById('knr-before-wrapper');
+    const handle = document.getElementById('knr-slider-handle');
+
+    if (slider && beforeWrapper && handle) {
+      let isDragging = false;
+
+      const updateSlider = (clientX) => {
+        const rect = slider.getBoundingClientRect();
+        let position = ((clientX - rect.left) / rect.width) * 100;
+
+        // Limites du glissement entre 0% et 100%
+        if (position < 0) position = 0;
+        if (position > 100) position = 100;
+
+        beforeWrapper.style.width = `${position}%`;
+        handle.style.left = `${position}%`;
+      };
+
+      // Gestionnaires de souris
+      slider.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        updateSlider(e.clientX);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        updateSlider(e.clientX);
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+      // Gestionnaires tactiles pour mobiles
+      slider.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        updateSlider(e.touches[0].clientX);
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        updateSlider(e.touches[0].clientX);
+      });
+
+      window.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+    }
+
+    /* 2. LOGIQUE CAROUSEL TEMOIGNAGES */
+    const testimonials = [
+      {
+        author: "Clara T.",
+        text: "J'utilise ce sérum depuis trois mois et la différence est saisissante. Mes rides d'expression se sont considérablement atténuées et mon teint a retrouvé une luminosité que je n'avais plus depuis des années. Une texture soyeuse qui pénètre instantanément. Je ne peux plus m'en passer."
+      },
+      {
+        author: "Sophie R.",
+        text: "Une formule d'une douceur exceptionnelle. Ma peau est visiblement repulpée au réveil et l'aspect fatigué de mes traits a totalement disparu après seulement deux semaines d'utilisation quotidienne."
+      },
+      {
+        author: "Camille L.",
+        text: "Le meilleur sérum régénérant que j'ai pu tester jusqu'ici. Ma peau sensible l'adore, l'absorption est instantanée et les résultats sur les rides du front sont impressionnants de jour en jour."
+      }
+    ];
+
+    let currentIndex = 0;
+    const authorTarget = document.getElementById('knr-author-target');
+    const quoteTarget = document.getElementById('knr-quote-target');
+    const btnPrev = document.getElementById('knr-btn-prev');
+    const btnNext = document.getElementById('knr-btn-next');
+
+    if (authorTarget && quoteTarget && btnPrev && btnNext) {
+      
+      const renderTestimonial = (index) => {
+        // Transition de fondu
+        authorTarget.style.opacity = '0';
+        quoteTarget.style.opacity = '0';
+
+        setTimeout(() => {
+          authorTarget.textContent = testimonials[index].author;
+          quoteTarget.textContent = `"${testimonials[index].text}"`;
+          authorTarget.style.opacity = '1';
+          quoteTarget.style.opacity = '1';
+        }, 250);
+      };
+
+      btnPrev.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+        renderTestimonial(currentIndex);
+      });
+
+      btnNext.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        renderTestimonial(currentIndex);
+      });
+    }
+
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const scrollContainer = document.querySelector('.knr-how-to-use-grid');
+  const progressBar = document.getElementById('howToProgress');
+
+  if (scrollContainer && progressBar) {
+    scrollContainer.addEventListener('scroll', () => {
+      const scrollTotal = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      const scrollPos = scrollContainer.scrollLeft;
+      const scrollRatio = scrollPos / scrollTotal;
+      
+      // Le mouvement doit couvrir les 2/3 restants de la barre (puisque le trait fait 1/3)
+      const translateValue = scrollRatio * 200; 
+      progressBar.style.transform = `translateX(${translateValue}%)`;
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const newsGrid = document.querySelector('.knr-news-grid');
+  const newsBar = document.getElementById('newsProgressBar');
+
+  if (newsGrid && newsBar) {
+    newsGrid.addEventListener('scroll', () => {
+      const scrollTotal = newsGrid.scrollWidth - newsGrid.clientWidth;
+      const scrollPos = newsGrid.scrollLeft;
+      const scrollRatio = scrollPos / scrollTotal;
+      
+      // Puisque le trait fait 25% (1/4), il doit bouger sur les 300% restants de sa largeur
+      const translateValue = scrollRatio * 300; 
+      newsBar.style.transform = `translateX(${translateValue}%)`;
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  // On récupère toutes les colonnes du footer
+  const footerCols = document.querySelectorAll('.knr-footer-col');
+
+  footerCols.forEach(col => {
+    const title = col.querySelector('.knr-footer-title');
+    const list = col.querySelector('.knr-footer-links-list');
+
+    // On n'active l'accordéon que si la colonne a un titre ET une liste
+    if (title && list) {
+      title.addEventListener('click', (e) => {
+        // Uniquement sur mobile (< 991px)
+        if (window.innerWidth <= 991) {
+          e.preventDefault();
+          
+          const isActive = col.classList.contains('active');
+
+          // 1. (Optionnel) Fermer les autres colonnes
+          footerCols.forEach(c => c.classList.remove('active'));
+
+          // 2. Si elle n'était pas active, on l'ouvre
+          if (!isActive) {
+            col.classList.add('active');
+          }
+          // Sinon elle reste fermée (effet toggle)
+        }
+      });
+    }
+  });
+});
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    /* 1. VARIATION FLOTTANTE */
+    const floatSizeBtns = document.querySelectorAll('.knr-float-size-btn');
+    const floatPriceEl = document.getElementById('knr-float-active-price');
+    const floatVariantInput = document.getElementById('knr-float-variant-id-input');
+
+    floatSizeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.querySelectorAll('.knr-float-size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const id = btn.getAttribute('data-id');
+        const price = btn.getAttribute('data-price');
+
+        if (id && floatVariantInput) {
+          floatVariantInput.value = id;
+        }
+        if (price && floatPriceEl) {
+          floatPriceEl.textContent = price;
+        }
+      });
+    });
+
+    /* 2. AJOUT PANIER AJAX DE LA FICHE FLOTTANTE */
+    const floatForm = document.getElementById('knr-float-atc-form');
+    const floatSubmitBtn = document.getElementById('knr-float-submit-btn');
+
+    if (floatForm && floatSubmitBtn) {
+      floatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const variantId = floatVariantInput ? floatVariantInput.value : null;
+        if (!variantId) return;
+
+        const originalContent = floatSubmitBtn.innerHTML;
+        floatSubmitBtn.innerHTML = "...";
+        floatSubmitBtn.disabled = true;
+
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              id: parseInt(variantId),
+              quantity: 1
+            })
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Mise à jour asynchrone du badge de panier global
+            const cartResp = await fetch('/cart.js');
+            const cart = await cartResp.json();
+            const badge = document.querySelector('.knr-cart-badge');
+            if (badge) badge.textContent = cart.item_count;
+
+            floatSubmitBtn.innerHTML = "✓";
+            setTimeout(() => {
+              floatSubmitBtn.innerHTML = originalContent;
+              floatSubmitBtn.disabled = false;
+            }, 1500);
+          } else {
+            alert(data.description || "Erreur d'ajout au panier");
+            floatSubmitBtn.innerHTML = originalContent;
+            floatSubmitBtn.disabled = false;
+          }
+        } catch (err) {
+          console.error("Erreur AJAX:", err);
+          floatSubmitBtn.innerHTML = originalContent;
+          floatSubmitBtn.disabled = false;
+        }
+      });
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.knr-reassurance-container');
+  const dots = document.querySelectorAll('.reassurance-dot');
+
+  if (container && dots.length > 0) {
+    container.addEventListener('scroll', () => {
+      // Calcule quel index est actuellement visible
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    });
+  }
+});
+</script>
+
+<!-- ==========================================
+     C. LOGIQUE INTERACTIVE ET APPELS AJAX CART
+     ========================================== -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    /* 1. SELECTION DES VARIANTS */
+    const variantButtons = document.querySelectorAll('.knr-variant-btn');
+    const variantIdInput = document.getElementById('knr-variant-id-input');
+    const activePriceEl = document.getElementById('knr-active-price');
+    const comparePriceEl = document.getElementById('knr-compare-price');
+
+    variantButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.querySelectorAll('.knr-variant-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const id = btn.getAttribute('data-id');
+        if (id && variantIdInput) {
+          variantIdInput.value = id;
+        }
+
+        const price = btn.getAttribute('data-price');
+        const comparePrice = btn.getAttribute('data-compare-price');
+
+        if (price && activePriceEl) activePriceEl.textContent = price;
+        if (comparePriceEl) {
+          comparePriceEl.textContent = comparePrice ? comparePrice : '';
+        }
+      });
+    });
+
+    /* 2. LOGIQUE DES ACCORDÉONS */
+    const accordionHeaders = document.querySelectorAll('.knr-accordion-header');
+
+    accordionHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const currentItem = header.parentElement;
+        const isActive = currentItem.classList.contains('active');
+
+        document.querySelectorAll('.knr-accordion-item').forEach(item => {
+          item.classList.remove('active');
+          item.querySelector('.knr-accordion-content').style.display = 'none';
+          item.querySelector('.knr-accordion-icon').textContent = '▼';
+        });
+
+        if (!isActive) {
+          currentItem.classList.add('active');
+          currentItem.querySelector('.knr-accordion-content').style.display = 'block';
+          currentItem.querySelector('.knr-accordion-icon').textContent = '▲';
+        }
+      });
+    });
+
+    /* 3. LOGIQUE AJAX PANIER */
+    async function updateCartBadge() {
+      try {
+        const response = await fetch('/cart.js');
+        const cart = await response.json();
+        const badge = document.querySelector('.knr-cart-badge');
+        if (badge) {
+          badge.textContent = cart.item_count;
+        }
+      } catch (err) {
+        console.error("Erreur badge panier:", err);
+      }
+    }
+
+    async function addToCartAJAX(variantId, buttonElement) {
+      if (!variantId) return;
+      const originalContent = buttonElement.innerHTML;
+      
+      buttonElement.innerHTML = "...";
+      buttonElement.disabled = true;
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: parseInt(variantId),
+            quantity: 1
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          updateCartBadge();
+          buttonElement.innerHTML = "✓";
+          setTimeout(() => {
+            buttonElement.innerHTML = originalContent;
+            buttonElement.disabled = false;
+          }, 1500);
+        } else {
+          alert(data.description || "Erreur d'ajout au panier");
+          buttonElement.innerHTML = originalContent;
+          buttonElement.disabled = false;
+        }
+      } catch (err) {
+        console.error("Erreur AJAX panier:", err);
+        buttonElement.innerHTML = originalContent;
+        buttonElement.disabled = false;
+      }
+    }
+
+    const mainForm = document.getElementById('knr-main-atc-form');
+    const mainSubmitBtn = document.getElementById('knr-main-submit-btn');
+
+    if (mainForm) {
+      mainForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addToCartAJAX(variantIdInput ? variantIdInput.value : null, mainSubmitBtn);
+      });
+    }
+
+    document.querySelectorAll('.knr-quick-add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const variantId = btn.getAttribute('data-variant-id');
+        addToCartAJAX(variantId, btn);
+      });
+    });
+
+  });
+</script>
+
+{% schema %}
+{
+  "name": "KNR Product Main",
+  "tag": "section",
+  "class": "section-product-main",
+  "settings": []
+}
+{% endschema %}

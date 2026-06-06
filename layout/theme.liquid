@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+
+    {% comment %}
+      Font preloading:
+      1. Preconnect to font CDN for faster connection
+      2. Preload only the critical font variant (base weight)
+      3. Additional variants load on-demand via @font-face
+    {% endcomment %}
+    {% unless settings.type_primary_font.system? %}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+
+      {% comment %} Preload the base font variant for initial page render {% endcomment %}
+      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {% endunless %}
+
+    {% # Load and preload the critical CSS %}
+    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 100vh !important; /* CORRIGÉ : min-height au lieu de height pour libérer le défilement */
+    overflow-x: hidden !important;
+  }
+
+  /* Le reste de vos styles de theme.liquid reste identique */
+  #MainContent, .main-content, main, .page-container, .shopify-section, .page-width {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  header, .header, .header-wrapper, .section-header, .announcement-bar, [id*="shopify-section-header"] {
+    display: none !important;
+  }
+
+  .knr-header-outer {
+    display: flex !important;
+  }
+
+  :root {
+    --color-bg-cream: #F4F1EB;
+    --color-text-dark: #1E1E1E;
+    --color-text-muted: #6E6E6E;
+    --color-accent-black: #000000;
+    --color-border: #E0DDD6;
+    --font-inter: 'Inter', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-inter);
+    background-color: #ffffff;
+    color: var(--color-text-dark);
+  }
+</style>
+
+  </head>
+
+  <body>
+  {% section 'knr-announcement-bar' %}
+    {% section 'knr-header' %}
+    {{ content_for_layout }}
+  </body>
+</html>

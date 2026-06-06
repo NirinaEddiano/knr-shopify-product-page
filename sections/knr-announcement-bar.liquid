@@ -1,0 +1,97 @@
+<style>
+  .knr-announcement-bar {
+    background-color: #000000;
+    height: 32px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .knr-announcement-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .knr-announcement-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0%;
+    margin: 0;
+    display: inline-block;
+  }
+
+  .knr-announcement-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-bottom: 0.8px solid #FFFFFF;
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: opacity 0.2s ease;
+  }
+
+  .knr-announcement-link:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<div class="knr-announcement-bar">
+  <div class="knr-announcement-container">
+    {%- if section.settings.text != blank -%}
+      <span class="knr-announcement-text">{{ section.settings.text }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.link_text != blank -%}
+      <a href="{{ section.settings.link_url | default: '#' }}" class="knr-announcement-link">
+        {{ section.settings.link_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Announcement Bar",
+  "tag": "section",
+  "class": "section-announcement-bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texte principal",
+      "default": "Livraison estimée sous 48h"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Texte du lien",
+      "default": "consectetur."
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Lien"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KNR Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

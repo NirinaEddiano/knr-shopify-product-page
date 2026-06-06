@@ -1,0 +1,13 @@
+{
+  "name": "Produit KNR",
+  "wrapper": "div",
+  "sections": {
+    "main": {
+      "type": "knr-product-main",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

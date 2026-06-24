@@ -1,13 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Produit KNR",
   "wrapper": "div",
   "sections": {
     "main": {
       "type": "knr-product-main",
       "settings": {}
+    },
+    "knr_cart_drawer_FwUVVX": {
+      "type": "knr-cart-drawer",
+      "name": "KNR Cart Drawer",
+      "settings": {
+        "threshold_delivery": 50,
+        "threshold_samples": 75,
+        "threshold_free_product": 100,
+        "free_gift_product": "masque-repulpant-pro-hyaluronique-anti-rides",
+        "samples_pool": [
+          "echantillon-creme-cactus",
+          "echantillon-huile-precieuse"
+        ]
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "knr_cart_drawer_FwUVVX"
   ]
 }

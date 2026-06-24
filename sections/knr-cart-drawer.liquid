@@ -1,0 +1,222 @@
+{{ 'knr-cart-drawer.css' | asset_url | stylesheet_tag }}
+{{ 'knr-cart-drawer.js' | asset_url | script_tag }}
+
+<div id="knr-cart-overlay" class="knr-cart-overlay"></div>
+
+<div id="knr-cart-drawer" class="knr-cart-drawer"
+     data-threshold-delivery="{{ section.settings.threshold_delivery | times: 100 }}"
+     data-threshold-samples="{{ section.settings.threshold_samples | times: 100 }}"
+     data-threshold-gift="{{ section.settings.threshold_free_product | times: 100 }}"
+     data-gift-variant-id="{{ section.settings.free_gift_product.first_available_variant.id }}"
+     data-msg-below-delivery="{{ section.settings.msg_below_delivery | escape }}"
+     data-msg-below-samples="{{ section.settings.msg_below_samples | escape }}"
+     data-msg-below-gift="{{ section.settings.msg_below_gift | escape }}"
+     data-msg-all-unlocked="{{ section.settings.msg_all_unlocked | escape }}">
+
+  <!-- VUE 1 : PANIER PRINCIPAL -->
+  <div id="knr-drawer-view-main" class="knr-drawer-view active">
+    <div class="knr-drawer-header">
+      <div class="knr-drawer-title-row">
+        <svg class="knr-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h2>Votre panier (<span id="knr-drawer-count">{{ cart.item_count }}</span>)</h2>
+      </div>
+      <button type="button" id="knr-drawer-close" class="knr-drawer-close">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="knr-drawer-loader"></div>
+
+    <div class="knr-drawer-body">
+      <!-- Barre de progression de Gamification -->
+      <div class="knr-gamification-wrapper">
+        <div class="knr-progress-text-wrapper">
+          <p id="knr-progress-message" class="knr-progress-message">Chargement de vos avantages...</p>
+          <div class="knr-spinner" id="knr-drawer-spinner"></div>
+        </div>
+
+        <div class="knr-progress-container">
+          <div id="knr-progress-fill" class="knr-progress-fill"></div>
+
+          <div class="knr-step-node" id="node-delivery" style="left: 20%;">
+            <div class="node-circle">
+              <svg class="node-svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <span class="node-label">Livraison Offerte</span>
+          </div>
+
+          <div class="knr-step-node" id="node-samples" style="left: 50%;">
+            <div class="node-circle">
+              <svg class="node-svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10" stroke-dasharray="3 3"/></svg>
+            </div>
+            <span class="node-label">3 Échantillons</span>
+          </div>
+
+          <div class="knr-step-node" id="node-gift" style="left: 80%;">
+            <div class="node-circle">
+              <svg class="node-svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8V3M12 3a3 3 0 1 0-3 3h6a3 3 0 1 0-3-3z"/></svg>
+            </div>
+            <span class="node-label">1 Produit Offert</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="knr-cart-items-list" class="knr-cart-items-list">
+        {% if cart.item_count == 0 %}
+          <p class="knr-empty-message">Votre panier est vide.</p>
+        {% else %}
+          {% for item in cart.items %}
+            {% if item.properties._sample == 'true' %}
+              {% continue %}
+            {% endif %}
+            {%- assign is_gift = false -%}
+            {%- assign is_sample = false -%}
+            {%- if item.properties._gift == 'true' -%}{%- assign is_gift = true -%}{%- endif -%}
+            {%- if item.properties._sample == 'true' -%}{%- assign is_sample = true -%}{%- endif -%}
+
+            <div class="knr-cart-item" data-variant-id="{{ item.variant_id }}" data-key="{{ item.key }}" data-price="{{ item.price }}">
+              <div class="knr-item-img-wrapper">
+                <img src="{{ item.image | image_url: width: 120, height: 120, crop: 'center' }}" alt="{{ item.title | escape }}" loading="lazy">
+              </div>
+              <div class="knr-item-details">
+                <div class="knr-item-header">
+                  <div class="knr-item-meta">
+                    {% if item.product.metafields.reviews.rating %}
+                      <div class="knr-item-stars">★★★★☆ <span class="review-count">132 AVIS</span></div>
+                    {% endif %}
+                    <span class="knr-item-title">{{ item.product.title }}</span>
+                  </div>
+                  <span class="knr-item-price">
+                    {% if is_gift or is_sample %}OFFERT{% else %}{{ item.final_line_price | money }}{% endif %}
+                  </span>
+                </div>
+                <p class="knr-item-variant">{{ item.variant.title }}</p>
+
+                <div class="knr-item-actions">
+                  {% if is_gift or is_sample %}
+                    <span class="knr-gift-badge">Cadeau</span>
+                  {% else %}
+                    <div class="knr-qty-selector">
+                      <button type="button" class="qty-btn qty-minus" data-key="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}">−</button>
+                      <span class="qty-val">{{ item.quantity }}</span>
+                      <button type="button" class="qty-btn qty-plus" data-key="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}">+</button>
+                    </div>
+                  {% endif %}
+                  <button type="button" class="knr-item-remove" data-key="{{ item.key }}">Supprimer</button>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="knr-drawer-footer">
+      <div id="knr-footer-samples-selection" class="knr-footer-samples-selection" style="display: none;">
+        <p class="samples-sub-title">Choisissez vos échantillons offerts</p>
+        <span class="samples-sub-count" id="knr-footer-samples-indicator">0 échantillons offerts.</span>
+
+        <div class="samples-thumbs-row">
+          <div class="thumbs-slots" id="knr-thumbs-slots"></div>
+          <button type="button" id="knr-trigger-samples-view" class="knr-choose-samples-btn">Choisir</button>
+        </div>
+      </div>
+
+      <div class="knr-footer-subtotal">
+        <span>Sous-total</span>
+        <strong id="knr-drawer-subtotal-val">{{ cart.total_price | money }}</strong>
+      </div>
+      <a href="/checkout" class="knr-checkout-button" id="knr-checkout-btn">
+        Voir mon panier | <span id="knr-checkout-btn-price">{{ cart.total_price | money }}</span>
+      </a>
+      <p class="knr-checkout-disclaimer">Les frais de livraison et codes promo s'appliquent lors du paiement</p>
+    </div>
+  </div>
+
+  <!-- VUE 2 : GRILLE DE SÉLECTION DES ÉCHANTILLONS -->
+  <div id="knr-drawer-view-samples" class="knr-drawer-view">
+    <div class="knr-drawer-header">
+      <button type="button" id="knr-back-to-main" class="knr-back-btn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Échantillons</span>
+      </button>
+      <span class="knr-samples-fraction" id="knr-samples-fraction">0/3</span>
+    </div>
+
+    <div class="knr-drawer-body knr-samples-body">
+      <div class="knr-samples-grid">
+{% if section.settings.samples_collection != blank %}
+  {% for sample in section.settings.samples_collection.products %}
+    <div class="knr-sample-card" data-variant-id="{{ sample.first_available_variant.id }}">
+      <div class="knr-sample-img">
+        <img src="{{ sample.featured_image | img_url: '120x' }}" alt="{{ sample.title }}">
+      </div>
+      <div class="knr-sample-info">
+        <span class="knr-sample-title">{{ sample.title }}</span>
+        <span class="knr-sample-subtitle">1 ml</span>
+        <button type="button" class="knr-sample-add-link" data-variant-id="{{ sample.first_available_variant.id }}">Ajouter</button>
+      </div>
+    </div>
+  {% endfor %}
+        {% else %}
+          <p class="knr-empty-message">Aucun échantillon disponible. Veuillez configurer la section.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="knr-drawer-footer">
+      <button type="button" id="knr-validate-samples-choice" class="knr-validate-selection-btn">
+        Valider votre choix | <span id="knr-samples-selected-btn-count">0/3</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Cart Drawer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Paliers de Gamification"
+    },
+    {
+      "type": "number",
+      "id": "threshold_delivery",
+      "label": "Seuil Livraison Offerte (€)",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "threshold_samples",
+      "label": "Seuil Échantillons Offerts (€)",
+      "default": 75
+    },
+    {
+      "type": "number",
+      "id": "threshold_free_product",
+      "label": "Seuil Produit Offert (€)",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Cadeaux et Échantillons"
+    },
+    {
+      "type": "product",
+      "id": "free_gift_product",
+      "label": "Produit Offert (Cadeau)"
+    },
+    {
+      "type": "collection",
+      "id": "samples_collection",
+      "label": "Collection d'échantillons"
+    }
+  ],
+  "presets": [
+    {
+      "name": "KNR Cart Drawer"
+    }
+  ]
+}
+{% endschema %}
